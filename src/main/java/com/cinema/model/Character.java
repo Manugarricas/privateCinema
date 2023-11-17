@@ -1,5 +1,6 @@
 package com.cinema.model;
 
+import java.util.List;
 import java.util.Objects;
 
 import com.cinema.exceptions.CharacterException;
@@ -7,6 +8,7 @@ import com.cinema.exceptions.CharacterException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,6 +23,9 @@ public class Character {
 	private String nationality;
 	@Column (name = "sexo_persona")
 	private String sex;
+	@OneToMany(mappedBy="personaje")
+	private List<CharacterFilm> listCharacterFilm;
+	
 	
 //	
 //	Creacion de los constructores
