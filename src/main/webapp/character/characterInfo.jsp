@@ -71,12 +71,17 @@
 	     			<p>Sex: <%=c.getSex() %></p><br>
 						<form action="./characterEdit.jsp">
 							<input type="text" name="characterEdit" value='<%=c.getName()%>' hidden>
-							<button type="submit" name="edit">Edit</button>
+							<button type="submit" name="edit">Editar</button>
 						</form>
-												<form action="./characterDelete.jsp">
+						<form action="./characterDelete.jsp">
 							<input type="text" name="characterDelete" value='<%=c.getName()%>' hidden>
-							<button type="submit" name="delete">Delete</button>
+							<button type="submit" name="delete">Borrar</button>
 						</form>
+						<form action="../jobs/infoJobs.jsp">
+							<input type="text" name="characterFilm" value='<%=c.getName()%>' hidden>
+							<button type="submit" name="film">Ver Filmografias</button>
+						</form>
+    
     
 					
 				</tr>
