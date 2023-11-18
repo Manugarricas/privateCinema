@@ -3,6 +3,8 @@ package com.cinema.model;
 import java.sql.Date;
 import java.util.Objects;
 
+import com.cinema.exceptions.ProjectionException;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -25,7 +27,7 @@ public class Projection {
 	
 	@Id
 	@JoinColumn(name="fecha_estreno")
-	private Date fechaEstreno;
+	private Date releaseDate;
 	
 	@JoinColumn(name="dias_estreno")
 	private int premiereDays;
@@ -38,22 +40,21 @@ public class Projection {
 		super();
 	}
 
-	public Projection(Cinema cinema, Room room, Film film, Date fechaEstreno, int premiereDays, int viewers,
-			int takings) {
+	public Projection(Room room, Film film, Date releaseDate, int premiereDays, int viewers,
+			int takings) throws ProjectionException {
 		super();
-		this.room = room;
-		this.film = film;
-		this.fechaEstreno = fechaEstreno;
-		this.premiereDays = premiereDays;
-		this.viewers = viewers;
-		this.takings = takings;
+		setRoom(room);
+		setFilm(film);
+		setReleaseDate(releaseDate);
+		setPremiereDays(premiereDays);
+		setViewers(viewers);
+		setTakings(takings);
 	}
 
-	//HACER EQUALS Y HASHCODE DE LAS DEMAS CLASES Y VOLVER A HACER ESTOS
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(fechaEstreno, film, room);
+		return Objects.hash(releaseDate, film, room);
 	}
 
 	@Override
@@ -65,7 +66,7 @@ public class Projection {
 		if (getClass() != obj.getClass())
 			return false;
 		Projection other = (Projection) obj;
-		return Objects.equals(fechaEstreno, other.fechaEstreno)
+		return Objects.equals(releaseDate, other.releaseDate)
 				&& Objects.equals(film, other.film) && Objects.equals(room, other.room);
 	}
 
@@ -73,7 +74,10 @@ public class Projection {
 		return room;
 	}
 
-	public void setRoom(Room room) {
+	public void setRoom(Room room) throws ProjectionException {
+		if(room == null) {
+			throw new ProjectionException("The room cannot be null");
+		}
 		this.room = room;
 	}
 
@@ -81,23 +85,35 @@ public class Projection {
 		return film;
 	}
 
-	public void setFilm(Film film) {
+	public void setFilm(Film film) throws ProjectionException {
+		if(film == null) {
+			throw new ProjectionException("The film cannot be null");
+		}
 		this.film = film;
 	}
 
-	public Date getFechaEstreno() {
-		return fechaEstreno;
+	public Date getReleaseDate() {
+		return releaseDate;
 	}
 
-	public void setFechaEstreno(Date fechaEstreno) {
-		this.fechaEstreno = fechaEstreno;
+	public void setReleaseDate(Date releaseDate) throws ProjectionException {
+		if(releaseDate == null) {
+			throw new ProjectionException("The releaseDate cannot be null");
+		}
+		this.releaseDate = releaseDate;
 	}
 
 	public int getPremiereDays() {
 		return premiereDays;
 	}
 
-	public void setPremiereDays(int premiereDays) {
+	public void setPremiereDays(int premiereDays) throws ProjectionException {
+		if(premiereDays < 0) {
+			throw new ProjectionException("The Release Days field cannot contain a negative value");
+		}
+		else if(premiereDays > 31) {
+			throw new ProjectionException("The projection will not be more than a month");
+		}
 		this.premiereDays = premiereDays;
 	}
 
@@ -105,7 +121,13 @@ public class Projection {
 		return viewers;
 	}
 
-	public void setViewers(int viewers) {
+	public void setViewers(int viewers) throws ProjectionException {
+		if(viewers < 0) {
+			throw new ProjectionException("The viewers field cannot contain a negative value");
+		}
+		else if(String.valueOf(viewers) == "") {
+			throw new ProjectionException("The viewers field cannot be empty");
+		}
 		this.viewers = viewers;
 	}
 
@@ -113,7 +135,13 @@ public class Projection {
 		return takings;
 	}
 
-	public void setTakings(int takings) {
+	public void setTakings(int takings) throws ProjectionException {
+		if(takings < 0) {
+			throw new ProjectionException("The viewers field cannot contain a negative value");
+		}
+		else if(String.valueOf(takings) == "") {
+			throw new ProjectionException("The viewers field cannot be empty");
+		}
 		this.takings = takings;
 	}
 	
