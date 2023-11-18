@@ -31,9 +31,10 @@ public class Film {
 	private int cost;
 	@Column(name="duracion")
 	private int duration;
+	/*
 	@OneToMany(mappedBy="pelicula")
 	private List<CharacterFilm> listCharacterFilm;
-	
+	*/
 	public Film () {
 		super();
 	}

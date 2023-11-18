@@ -23,10 +23,11 @@ public class Character {
 	private String nationality;
 	@Column (name = "sexo_persona")
 	private String sex;
+	/*
 	@OneToMany(mappedBy="personaje")
 	private List<CharacterFilm> listCharacterFilm;
 	
-	
+	*/
 //	
 //	Creacion de los constructores
 	
