@@ -16,6 +16,7 @@ public class Jobs {
 	@ManyToOne
 	@JoinColumn(name="cip")
 	private Film idFilm;
+	
 	@Id
 	@ManyToOne
 	@JoinColumn(name="nombre_persona")

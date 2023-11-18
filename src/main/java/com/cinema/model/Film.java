@@ -35,7 +35,7 @@ public class Film {
 	
 	@OneToMany(mappedBy="idFilm")
 	private List<Jobs> listCharacter;
-	
+
 
 	public Film () {
 		super();

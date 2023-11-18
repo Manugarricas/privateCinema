@@ -20,6 +20,7 @@ public class Task {
 	private String task;
 	@Column(name = "sexo_tarea")
 	private char taskGender;
+	
 	@OneToMany(mappedBy="idTask")
 	private List<Jobs> listCharacterFilm;
 	
