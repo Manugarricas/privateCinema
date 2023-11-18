@@ -20,5 +20,7 @@
     <mapping class= "com.cinema.model.Task"/>
     <mapping class= "com.cinema.model.Film"/>
     <mapping class= "com.cinema.model.Character"/>
+    <mapping class= "com.cinema.model.Cinema"/>
+    
   </session-factory>
 </hibernate-configuration>

@@ -11,6 +11,7 @@ import com.cinema.exceptions.FilmException;
 import com.cinema.util.BdUtil;
 import com.cinema.util.DBUtil;
 
+
 public class DbRepository {
 	
 	public static <T> void add(Class<T> clas, T object) throws DbExceptions{
@@ -102,5 +103,47 @@ public class DbRepository {
 			transaction.commit(); 
 			session.close();
 		}
+	}
+	public static <T> void deleteEntity(Class<T> t, String id) throws Exception {
+		T result = null;
+		Transaction transaction = null;
+		Session session = null;	
+		
+		try {
+			session = DBUtil.getSessionFactory().openSession();
+		} catch (Exception e) {
+			throw new Exception("Error en la base de datos");
+		}
+		
+		SelectionQuery<T> q =
+						session.createSelectionQuery("From " + t.getName() + " where id = :id",t);
+		q.setParameter(id, id);
+		List<T> entity = q.getResultList();
+		if(entity.size() != 0) { 
+			transaction = (Transaction) session.beginTransaction(); 
+			result = entity.get(0);
+			session.remove(result); 
+			transaction.commit(); 
+			session.close();
+		}
+	}
+	
+	public static <T> T find(Class <T>t, String id) throws Exception {
+		Transaction transaction = null;
+		Session session;
+		T result=null;
+		try {
+			session = DBUtil.getSessionFactory().openSession();
+			
+		} catch (Exception e) {
+			throw new Exception("Error en la base de datos");
+		}
+		
+		try {
+			result = session.find(t, id);
+		} catch (Exception e) {
+			throw new Exception("Error al obtener la entidad");
+		}
+		return result;
 	}
 }

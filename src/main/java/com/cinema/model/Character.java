@@ -25,9 +25,9 @@ public class Character {
 	private String nationality;
 	@Column (name = "sexo_persona")
 	private String sex;
+
 	@OneToMany(mappedBy="nameCharacter")
 	private List<Jobs> listFilm;
-	
 	
 //	
 //	Creacion de los constructores
