@@ -1,5 +1,6 @@
 package com.cinema.model;
 
+import java.util.List;
 import java.util.Objects;
 
 import com.cinema.exceptions.FilmException;
@@ -7,6 +8,7 @@ import com.cinema.exceptions.FilmException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 
@@ -29,6 +31,9 @@ public class Film {
 	private int cost;
 	@Column(name="duracion")
 	private int duration;
+	
+	@OneToMany(mappedBy="idFilm")
+	private List<Jobs> listCharacter;
 	
 	public Film () {
 		super();

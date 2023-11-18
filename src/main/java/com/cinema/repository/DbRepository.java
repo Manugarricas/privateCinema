@@ -1,11 +1,11 @@
 package com.cinema.repository;
+import java.util.List;
 
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.SelectionQuery;
-
 import com.cinema.exceptions.DbExceptions;
 import com.cinema.exceptions.FilmException;
 import com.cinema.util.BdUtil;

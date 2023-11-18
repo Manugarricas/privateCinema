@@ -1,5 +1,6 @@
 package com.cinema.model;
 
+import java.util.List;
 import java.util.Objects;
 
 import com.cinema.exceptions.TaskException;
@@ -7,6 +8,7 @@ import com.cinema.exceptions.TaskException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,7 +20,8 @@ public class Task {
 	private String task;
 	@Column(name = "sexo_tarea")
 	private char taskGender;
-	
+	@OneToMany(mappedBy="idTask")
+	private List<Jobs> listCharacterFilm;
 	
 	
 	
