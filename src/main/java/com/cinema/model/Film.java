@@ -32,11 +32,11 @@ public class Film {
 	@Column(name="duracion")
 	private int duration;
 
-	
+	/*
 	@OneToMany(mappedBy="idFilm")
 	private List<Jobs> listCharacter;
 
-
+*/
 	public Film () {
 		super();
 	}

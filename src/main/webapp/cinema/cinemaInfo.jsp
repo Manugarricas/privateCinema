@@ -43,8 +43,8 @@
             <a href="${pageContext.request.servletContext.contextPath}/tasks/listTask.jsp">Tareas</a>
             </div>
         </nav>
-        <a href="${pageContext.request.servletContext.contextPath}/cinema/addCinema.jsp"><button type="button">Añadir Personaje</button></a>
-        <a href="${pageContext.request.servletContext.contextPath}/cinema/listCinema.jsp"><button type="button">Lista de Personaje</button></a>  
+        <a href="${pageContext.request.servletContext.contextPath}/cinema/addCinema.jsp"><button type="button">Añadir Cine</button></a>
+        <a href="${pageContext.request.servletContext.contextPath}/cinema/listCinema.jsp"><button type="button">Lista de Cines</button></a>  
           
     </header>
 
@@ -74,8 +74,8 @@
 							<input type="text" name="characterEdit" value='<%=c.getCinema()%>' hidden>
 							<button type="submit" name="edit">Edit</button>
 						</form>
-												<form action="./characterDelete.jsp">
-							<input type="text" name="characterDelete" value='<%=c.getCinema()%>' hidden>
+												<form action="./deleteCinema.jsp">
+							<input type="text" name="deleteCinema" value='<%=c.getCinema()%>' hidden>
 							<button type="submit" name="delete">Delete</button>
 						</form>
     
