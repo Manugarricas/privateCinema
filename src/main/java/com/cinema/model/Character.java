@@ -50,11 +50,11 @@ public class Character {
 		return JobsRepository.find(this.name);
 	}
 
-
+/*
 	public void setListFilm(List<Jobs> listFilm) {
 		this.listFilm = listFilm;
 	}
-
+*/
 //	Creacion de setters y getters
 	
 	public String getName() {

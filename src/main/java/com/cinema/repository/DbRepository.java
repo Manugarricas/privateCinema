@@ -20,6 +20,34 @@ public class DbRepository {
 
         try {
             session = BdUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+        } catch (Exception e) {
+            throw new DbExceptions("Error al conectar en la base de datos");
+
+        }
+
+        
+
+        try {
+           
+                session.persist(object);
+                transaction.commit();
+                session.close();
+            
+        } catch (Exception e) {
+            session.close();
+            transaction.rollback();
+            throw new DbExceptions("Error al añadir");
+        }
+
+    }
+	
+	public static <T> void update(Class<T> clas, T object) throws DbExceptions{
+        Session session = null;
+        Transaction transaction = null;
+
+        try {
+            session = BdUtil.getSessionFactory().openSession();
         } catch (Exception e) {
             throw new DbExceptions("Error al conectar en la base de datos");
 
@@ -29,7 +57,7 @@ public class DbRepository {
 
         try {
             if(session.find(clas, object)==null) {
-                session.persist(object);
+                session.merge(object);
                 transaction.commit();
                 session.close();
             }
@@ -128,22 +156,5 @@ public class DbRepository {
 		}
 	}
 	
-	public static <T> T find(Class <T>t, String id) throws Exception {
-		Transaction transaction = null;
-		Session session;
-		T result=null;
-		try {
-			session = DBUtil.getSessionFactory().openSession();
-			
-		} catch (Exception e) {
-			throw new Exception("Error en la base de datos");
-		}
-		
-		try {
-			result = session.find(t, id);
-		} catch (Exception e) {
-			throw new Exception("Error al obtener la entidad");
-		}
-		return result;
-	}
+	
 }
