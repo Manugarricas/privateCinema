@@ -21,6 +21,6 @@
     <mapping class= "com.cinema.model.Film"/>
     <mapping class= "com.cinema.model.Character"/>
     <mapping class= "com.cinema.model.Cinema"/>
-    <mapping class= "xom.cinema.model.Room"/>
+    <mapping class= "com.cinema.model.Room"/>
   </session-factory>
 </hibernate-configuration>

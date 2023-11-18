@@ -12,6 +12,7 @@ import com.cinema.util.BdUtil;
 import com.cinema.util.DBUtil;
 
 
+
 public class DbRepository {
 	
 	public static <T> void add(Class<T> clas, T object) throws DbExceptions{
@@ -70,7 +71,8 @@ public class DbRepository {
     }
 
     public static <T> T find(Class<T> clas, String id) throws FilmException, DbExceptions {
-        T result = null; 
+       
+    	T result = null; 
         Session session = null;
 
         try {
@@ -154,6 +156,27 @@ public class DbRepository {
 			transaction.commit(); 
 			session.close();
 		}
+	}
+	
+	public static Object delete ( Object element) throws Exception {
+		Transaction transaction = null;
+		Object result= null;
+		Session session = null;
+		try {
+			session = DBUtil.getSessionFactory().openSession();
+			transaction = session.beginTransaction();
+		} catch (Exception e) {
+			throw new Exception("Error en la base de datos");
+		}
+		try {
+			session.remove(element);
+			transaction.commit();
+		} catch (Exception e) {
+			transaction.rollback();
+		}
+		session.close();
+		return  result;
+		
 	}
 	
 	

@@ -24,6 +24,7 @@
 		result = DbRepository.findAll(Cinema.class);
 		}catch(Exception e){
 			response.sendRedirect("../error.jsp?msg="+e.getMessage());
+			return;
 		}
 	
 	%>

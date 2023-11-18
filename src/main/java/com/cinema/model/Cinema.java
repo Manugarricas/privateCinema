@@ -1,10 +1,12 @@
 package com.cinema.model;
 
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -14,9 +16,12 @@ public class Cinema {
 	@Column(name = "cine")
 	private String cinema;
 	@Column(name = "ciudad_cine")
-	private String city_cinema;
+	private String cityCinema;
 	@Column(name = "direccion_cine")
-	private String management_cinema;
+	private String managementCinema;
+	
+	@OneToMany(mappedBy = "cinema")
+	private List<Room> rooms;
 	
 	/**
 	 * Contructor vacío
@@ -31,7 +36,7 @@ public class Cinema {
 	public Cinema(String cinema, String city_cinema) {
 		super();
 		this.cinema = cinema;
-		this.city_cinema = city_cinema;
+		this.cityCinema = city_cinema;
 	}
 	/**
 	 * Constructor con todos los parametos
@@ -39,8 +44,8 @@ public class Cinema {
 	public Cinema(String cinema, String city_cinema, String management_cinema) {
 		super();
 		this.cinema = cinema;
-		this.city_cinema = city_cinema;
-		this.management_cinema = management_cinema;
+		this.cityCinema = city_cinema;
+		this.managementCinema = management_cinema;
 	}
 	/**
 	 * Get && Set
@@ -52,18 +57,24 @@ public class Cinema {
 		this.cinema = cinema;
 	}
 	public String getCity_cinema() {
-		return city_cinema;
+		return cityCinema;
 	}
-	public void setCity_cinema(String city_cinema) {
-		this.city_cinema = city_cinema;
+	public void setCity_cinema(String cityCinema) {
+		this.cityCinema = cityCinema;
 	}
 	public String getManagement_cinema() {
-		return management_cinema;
+		return managementCinema;
 	}
-	public void setManagement_cinema(String management_cinema) {
-		this.management_cinema = management_cinema;
+	public void setManagementCinema(String managementCinema) {
+		this.managementCinema = managementCinema;
 	}
 	
+	public List<Room> getRooms() {
+		return rooms;
+	}
+	public void setRooms(List<Room> rooms) {
+		this.rooms = rooms;
+	}
 	/**
 	 * Equals
 	 */
