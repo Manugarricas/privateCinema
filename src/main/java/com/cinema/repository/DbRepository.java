@@ -92,30 +92,6 @@ public class DbRepository {
         return result;
 
     }
-    
-    public static <T> T find(Class<T> clas, T o) throws FilmException, DbExceptions {
-        
-    	T result = null; 
-        Session session = null;
-
-        try {
-            session = BdUtil.getSessionFactory().openSession();
-        } catch (Exception e) {
-            throw new DbExceptions("Error al conectar en la base de datos");
-        }
-
-        try {
-            result = session.find(clas, o);
-            session.close();
-        } catch (Exception e) {
-            session.close();
-            throw new DbExceptions("Error al encontrar la entidad");
-        }
-
-        return result;
-
-    }
-    
 	public static <T> List<T> findAll(Class<T> t) throws Exception{
 		Session session = null;
 		List<T> result = null;
