@@ -1,5 +1,6 @@
 package com.cinema.model;
 
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -7,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,10 +18,21 @@ public class Room {
 	@ManyToOne
 	@JoinColumn(name = "cine")
 	private Cinema cinema;
+	
 	@Id
+<<<<<<< HEAD
 	@Column(name = "sala")
 	private int idRoom;
 	@Column(name = "aforo")
+=======
+	@Column(name="sala")
+	private int idRoom;
+	
+	@OneToMany(mappedBy="room")
+	private List<Projection> listProjection;
+	
+	@Column(name="aforo")
+>>>>>>> Dario
 	private int capacity;
 	
 	//Constructores
@@ -33,22 +46,28 @@ public class Room {
 		super();
 	}
 	//Getters y setters
-	public Cinema getcinema() {
+	public Cinema getCinema() {
 		return cinema;
 	}
-	public void setcinema(Cinema cinema) {
+	public void setCinema(Cinema cinema) {
 		this.cinema = cinema;
 	}
-	public int getidRoom() {
+	public int getIdRoom() {
 		return idRoom;
 	}
-	public void setidRoom(int idRoom) {
+	public void setIdRoom(int idRoom) {
 		this.idRoom = idRoom;
 	}
-	public int getAforo() {
+	public List<Projection> getListProjection() {
+		return listProjection;
+	}
+	public void setListProjection(List<Projection> listProjection) {
+		this.listProjection = listProjection;
+	}
+	public int getCapacity() {
 		return capacity;
 	}
-	public void setAforo(int capacity) {
+	public void setCapacity(int capacity) {
 		this.capacity = capacity;
 	}
 	//Hash code and equals con las primary keys

@@ -11,7 +11,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="Trabajo")
 public class Jobs {
-	/*
+	
 	@Id
 	@ManyToOne
 	@JoinColumn(name="cip")
@@ -79,7 +79,7 @@ public class Jobs {
 				&& Objects.equals(nameCharacter, other.nameCharacter);
 	}
 	
-	*/
+	
 	
 	
 
