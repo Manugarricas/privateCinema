@@ -31,7 +31,7 @@ String answer = "Add required fields";
 String cinema ="";
 String city ="";
 String management ="";
-String details = "No character has been created";
+String details = "No Cinema has been created";
 Cinema c = null;
 
 try{
@@ -44,7 +44,7 @@ try{
 	c = new Cinema(cinema, city, management);
 	if(DbRepository.find(Cinema.class, c.getCinema())==null){
 		DbRepository.add(Cinema.class, c);
-		answer = "Add Character correctly";
+		answer = "Add Cinema correctly";
 		details = String.format("El ultimo cine creado se llama : %s , se encuentra en la ciudad : %s y su director es : %s." , cinema, city, management);
 	}else{
 		answer = "Cinema already exists";

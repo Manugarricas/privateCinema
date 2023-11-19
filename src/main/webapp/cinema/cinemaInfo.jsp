@@ -60,7 +60,7 @@
 			if(c.getCinema().equals(infoCinema)){%>
 				<tr>
 					<td><%=c.getCinema()%> 
-					<form action="characterList.jsp">
+					<form action="cinemaInfo.jsp">
 					<input id="info" name="info" type="text" class="form-control" value= '<%=c.getCinema()%>' hidden>
 		
 		    <button name="submit" type="submit" class="btn btn-primary">Info</button>
@@ -70,8 +70,8 @@
 					<p>Cinema: <%=infoCinema%></p><br>
 	     			<p>City: <%=c.getCity_cinema()%></p><br>
 	     			<p>Management: <%=c.getManagement_cinema() %></p><br>
-						<form action="./characterEdit.jsp">
-							<input type="text" name="characterEdit" value='<%=c.getCinema()%>' hidden>
+						<form action="./updateCinema.jsp">
+							<input type="text" name="cinemaEdit" value='<%=c.getCinema()%>' hidden>
 							<button type="submit" name="edit">Edit</button>
 						</form>
 												<form action="./deleteCinema.jsp">

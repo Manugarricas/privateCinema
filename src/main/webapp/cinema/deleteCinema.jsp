@@ -96,7 +96,7 @@ Cinema c = null;
 <%
 	if(request.getParameter("submit") != null){
 		DbRepository.delete(c);
-		response.sendRedirect("listCinema.jsp");
+		response.sendRedirect("listCinema.jsp?delete="+c.getCinema());
 	
 }
 

@@ -49,19 +49,20 @@ public class DbRepository {
 
         try {
             session = BdUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
         } catch (Exception e) {
             throw new DbExceptions("Error al conectar en la base de datos");
 
         }
 
-        transaction = session.beginTransaction();
+       
 
         try {
-            if(session.find(clas, object)==null) {
+            
                 session.merge(object);
                 transaction.commit();
                 session.close();
-            }
+            
         } catch (Exception e) {
             session.close();
             transaction.rollback();
