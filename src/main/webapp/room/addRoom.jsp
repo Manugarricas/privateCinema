@@ -48,8 +48,8 @@
       	try {
       		cinemas = (ArrayList<Cinema>)DbRepository.findAll(Cinema.class);
       	} catch (Exception e) {
-      		e.printStackTrace();
-      		message = "Error al obtener los cines";
+      		response.sendRedirect("../error.jsp?msg="+e.getMessage());
+    		return;
       	}
       	for (Cinema c : cinemas) {
       	%>
