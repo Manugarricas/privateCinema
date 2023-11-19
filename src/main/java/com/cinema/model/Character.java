@@ -25,10 +25,10 @@ public class Character {
 	private String nationality;
 	@Column (name = "sexo_persona")
 	private String sex;
+/*
 	@OneToMany(mappedBy="nameCharacter")
 	private List<Jobs> listFilm;
-	
-	
+	*/
 //	
 //	Creacion de los constructores
 	
@@ -50,11 +50,11 @@ public class Character {
 		return JobsRepository.findCharacter(this.name);
 	}
 
-
+/*
 	public void setListFilm(List<Jobs> listFilm) {
 		this.listFilm = listFilm;
 	}
-
+*/
 //	Creacion de setters y getters
 	
 	public String getName() {

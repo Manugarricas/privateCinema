@@ -33,10 +33,12 @@ public class Film {
 	private int cost;
 	@Column(name="duracion")
 	private int duration;
-	
+
+	/*
 	@OneToMany(mappedBy="idFilm")
 	private List<Jobs> listCharacter;
-	
+
+*/
 	public Film () {
 		super();
 	}
