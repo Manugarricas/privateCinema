@@ -3,7 +3,9 @@ package com.cinema.model;
 import java.util.List;
 import java.util.Objects;
 
+import com.cinema.exceptions.DbExceptions;
 import com.cinema.exceptions.FilmException;
+import com.cinema.repository.JobsRepository;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -49,6 +51,32 @@ public class Film {
 		setNacionality(nacionality);
 		setPresupuesto(cost);
 		setDuration(duracion);
+	}
+
+	
+	
+	public int getCost() {
+		return cost;
+	}
+
+	public void setCost(int cost) {
+		this.cost = cost;
+	}
+
+	public List<Jobs> getListCharacter() throws DbExceptions {
+		return JobsRepository.findFilm(this.id);
+	}
+
+	public void setListCharacter(List<Jobs> listCharacter) {
+		this.listCharacter = listCharacter;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
 	}
 
 	public String getId() {

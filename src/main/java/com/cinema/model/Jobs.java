@@ -27,7 +27,6 @@ public class Jobs {
 	
 	public Jobs() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Jobs(Film idFilm, Character nameCharacter, Task idTask) {

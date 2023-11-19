@@ -97,6 +97,16 @@ try{
 		</div>
       </form>
       </td>
+      <td>
+      <form action="../listJobs.jsp">
+      <input id="id" name="id" type="text" class="form-control" value= '<%=f.getId() %>' hidden>
+		<div class="form-group row">
+		  <div class="offset-4 col-8">
+		    <button name="submit" type="submit" class="btn btn-primary">Actores</button>
+		  </div>
+		</div>
+      </form>
+      </td>
     </tr>
     <%//Si no es nuestra pelicula simplemente mostramos su nombre y la posibilidad de poder mostrar sus datos
     }else{%>
