@@ -43,7 +43,16 @@
         <a href="${pageContext.request.servletContext.contextPath}/cinema/listCinema.jsp"><button type="button">Lista de Cines</button></a>  
           
     </header>
-
+<%if(request.getParameter("delete")!=null){ %>
+<div class="form-group row">
+    <label for="respuesta" class="col-4 col-form-label">El cine <%=request.getParameter("delete") %> se ha borrado con exito</label> 
+  </div>  
+<%} %>
+<%if(request.getParameter("update")!=null){ %>
+<div class="form-group row">
+    <label for="respuesta" class="col-4 col-form-label">El cine <%=request.getParameter("update") %> se ha actualizado con exito</label> 
+  </div>  
+<%} %>
 	<table class="table">
 		<thread>
 			<tr>
@@ -65,10 +74,7 @@
 		
 		
 		
-		<%if(request.getParameter("delete") != null){
-			DbRepository.deleteEntity(Cinema.class, request.getParameter("cinemaDelete")); 
-			
-		}%> 
+		
 		
 		
 		

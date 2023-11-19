@@ -2,6 +2,7 @@ package com.cinema.model;
 
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -13,10 +14,12 @@ import jakarta.persistence.Table;
 public class Room {
 	@Id
 	@ManyToOne
-	@JoinColumn(name = "cinema")
+	@JoinColumn(name = "cine")
 	private Cinema cinema;
 	@Id
+	@Column(name = "sala")
 	private int idRoom;
+	@Column(name = "aforo")
 	private int capacity;
 	
 	//Constructores
