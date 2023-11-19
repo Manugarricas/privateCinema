@@ -11,7 +11,7 @@ import com.cinema.util.BdUtil;
 
 public class JobsRepository extends DbRepository {
 
-	public static List<Jobs> find(String name) throws DbExceptions {
+	public static List<Jobs> findCharacter(String name) throws DbExceptions {
 		Session session = null;
 		List<Jobs> jobs = null;
 		
@@ -22,7 +22,32 @@ public class JobsRepository extends DbRepository {
 		}
 			
 		try {
-			NativeQuery<Jobs> query = session.createNativeQuery("Select * rom Trabajo where nombre_persona = ?1", Jobs.class);
+			NativeQuery<Jobs> query = session.createNativeQuery("Select * from Trabajo where nombre_persona = ?1", Jobs.class);
+			query.setParameter(1, name);
+			jobs = query.getResultList();
+			session.close();
+		} catch (Exception e) {
+			session.close();
+			throw new DbExceptions("Error al encontrar los trabajos");
+		}
+		
+		return jobs;
+		
+	}
+	
+	
+	public static List<Jobs> findFilm(String name) throws DbExceptions {
+		Session session = null;
+		List<Jobs> jobs = null;
+		
+		try {
+			session = BdUtil.getSessionFactory().openSession();
+		} catch (Exception e) {
+			throw new DbExceptions("Error al conectarse en la base de datos");
+		}
+			
+		try {
+			NativeQuery<Jobs> query = session.createNativeQuery("Select * from Trabajo where cip = ?1", Jobs.class);
 			query.setParameter(1, name);
 			jobs = query.getResultList();
 			session.close();

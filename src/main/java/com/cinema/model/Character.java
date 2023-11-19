@@ -47,7 +47,7 @@ public class Character {
 	}
 
 	public List<Jobs> getListFilm() throws DbExceptions {
-		return JobsRepository.find(this.name);
+		return JobsRepository.findCharacter(this.name);
 	}
 
 /*

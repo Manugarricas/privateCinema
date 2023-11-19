@@ -17,21 +17,21 @@
 <body>
 <%@include file="../nav.jsp" %>
 <%
-String nameCharacter = null;
-Character character = null;
-List<Jobs> jobsCharacter = null;
+String idFilm = null;
+Film film = null;
+List<Jobs> jobsFilm = null;
 
 try{
-	nameCharacter = request.getParameter("characterFilm");
-	character = DbRepository.find(Character.class, nameCharacter);
+	idFilm = request.getParameter("id");
+	film = DbRepository.find(Film.class, idFilm);
 }catch(Exception e){
-	response.sendRedirect("../error.jsp?msg=Error al encontrar el personaje");
+	response.sendRedirect("../error.jsp?msg=Error al encontrar la pelicula");
 }
 
 try{
-	jobsCharacter = character.getListFilm();
+	jobsFilm = film.getListCharacter();
 }catch(Exception e){
-	response.sendRedirect("../error.jsp?msg=Error al encontrar las peliculas del personaje");
+	response.sendRedirect("../error.jsp?msg=Error al encontrar los personajes de la pelicula");
 }
 
 
@@ -39,21 +39,19 @@ try{
 
 
 %>
-<h1>Lista de peliculas</h1>
+<h1>Lista de personajes</h1>
 <table class="table">
   <thead>
     <tr>
-      <th scope="col">Titulo de la pelicula</th>
-       <th scope="col">Año de lanzamiento</th>
-        <th scope="col">Tarea del personaje</th>
+      <th scope="col">Nombre del actor</th>
+       <th scope="col">Papel que interpreto</th>
     </tr>
   </thead>
   <tbody>
   <!-- Recorremos toda la lista para crear una fila por cada una de ellas y un boton para mostrar toda la informacion -->
-  <%for(Jobs j: jobsCharacter) { %>
+  <%for(Jobs j: jobsFilm) { %>
     <tr>
-      <td><%=j.getIdFilm().getName() %></td>
-      <td><%=j.getIdFilm().getYear() %></td>
+      <td><%=j.getNameCharacter().getName() %></td>
       <td><%=j.getIdTask().getTask() %></td>
     </tr>
     <%} %>
