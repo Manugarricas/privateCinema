@@ -34,8 +34,8 @@ public class Film {
 	@Column(name="duracion")
 	private int duration;
 	
-//	@OneToMany(mappedBy="film")
-//	private List<Projection> listProjection;
+	@OneToMany(mappedBy="film")
+	private List<Projection> listProjection;
 
 	
 	@OneToMany(mappedBy="idFilm")

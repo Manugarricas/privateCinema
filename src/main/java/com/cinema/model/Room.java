@@ -20,15 +20,29 @@ public class Room {
 	private Cinema cinema;
 	
 	@Id
+<<<<<<< HEAD
 	@Column(name = "sala")
 	private int idRoom;
 	@Column(name = "aforo")
 	private int capacity;
 
+=======
+
+	@Column(name = "sala")
+	private int idRoom;
+	@Column(name = "aforo")
+	
+>>>>>>> 1ff59242992e4568f081352d2da6034797e5c976
 	
 	@OneToMany(mappedBy="room")
 	private List<Projection> listProjection;
 	
+<<<<<<< HEAD
+=======
+	@Column(name="aforo")
+	private int capacity;
+	
+>>>>>>> 1ff59242992e4568f081352d2da6034797e5c976
 	//Constructores
 	public Room(Cinema cinema, int idRoom, int capacity) {
 		super();
