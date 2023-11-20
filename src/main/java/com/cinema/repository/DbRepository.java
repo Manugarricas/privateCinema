@@ -9,6 +9,7 @@ import org.hibernate.query.NativeQuery;
 import org.hibernate.query.SelectionQuery;
 import com.cinema.exceptions.DbExceptions;
 import com.cinema.exceptions.FilmException;
+import com.cinema.model.Jobs;
 import com.cinema.model.Room;
 import com.cinema.util.BdUtil;
 import com.cinema.util.DBUtil;
@@ -121,7 +122,7 @@ public class DbRepository {
         return result;
 
     }
-    
+
     public static Room find(Room room) throws FilmException, DbExceptions {
         
     	Room result = null; 

@@ -27,15 +27,6 @@
 	}catch(Exception e){
 		
 	}
-	/* if(request.getParameter("submit") != null){
-		Cinema cinema = DbRepository.find(Cinema.class, request.getParameter("cinema"));
-		Room room = DbRepository.find(Room.class, request.getParameter("room"));
-		Film film = DbRepository.find(Film.class, request.getParameter("film"));
-		Date releaseDate = Date.valueOf(request.getParameter("releaseDate"));
-		
-		Projection projection = ProjectionRepository.find(new Projection(room,film,releaseDate));
-		
-	} */
 
 %>
 <table class="table">

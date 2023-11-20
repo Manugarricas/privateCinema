@@ -16,6 +16,7 @@
 <title>Borrar Tarea</title>
 </head>
 <body>
+<%@include file="../nav.jsp" %>
 <%
 
 	Task t = (Task)session.getAttribute("task")!=null ? (Task)session.getAttribute("task"):null;
@@ -77,27 +78,8 @@
 			message = te.getMessage();
 		}
 	}
-
 %>
-
-
-    <header>
-        <nav>
-            <div class="menu">
-            <a href="${pageContext.request.servletContext.contextPath}/film/listFilm.jsp">Peliculas</a>
-            <a href="${pageContext.request.servletContext.contextPath}/character/characterList.jsp">Personajes</a>
-            <a href="${pageContext.request.servletContext.contextPath}/tasks/listTask.jsp">Tareas</a>
-            </div>
-        </nav>
-        <a href="${pageContext.request.servletContext.contextPath}/tasks/addTask.jsp"><button type="button">Añadir Tarea</button></a>
-        <a href="${pageContext.request.servletContext.contextPath}/tasks/listTask.jsp"><button type="button">Lista de Tareas</button></a>  
-          
-    </header>
-   
     <main>
-                  
- 			
-
             <form id="userForm">
                 <label for="name">Nombre Tarea:</label>
                 <input type="text" id="name" name="task" value='<%=task %>' readonly="readonly">
@@ -113,11 +95,7 @@
                 <a href="${pageContext.request.servletContext.contextPath}/tasks/listTask.jsp"><button type="button"><%=backValue %></button></a>  
                 <br>
             	<%= message %>
-                
               </form>
-              
-
         </main>
-
 </body>
 </html>

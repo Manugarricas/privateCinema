@@ -16,6 +16,7 @@
 
 </head>
 <body>
+<%@include file="../nav.jsp" %>
 	<% 
 		//Le pasamos una lista de personajes a result
 		List<Cinema> result = new ArrayList();
@@ -29,25 +30,8 @@
 		}catch(Exception e){
 			response.sendRedirect("../error.jsp?msg="+e.getMessage());
 		}
-		
-	
 	%>
-	
 <!-- 	Creamos el formulario y dentro de el hacemos un for para que nos recorra result e imprima todos los personajes -->
-
-<header>
-        <nav>
-            <div class="menu">
-            <a href="${pageContext.request.servletContext.contextPath}/film/listFilm.jsp">Peliculas</a>
-            <a href="${pageContext.request.servletContext.contextPath}/character/characterList.jsp">Personajes</a>
-            <a href="${pageContext.request.servletContext.contextPath}/tasks/listTask.jsp">Tareas</a>
-            </div>
-        </nav>
-        <a href="${pageContext.request.servletContext.contextPath}/cinema/addCinema.jsp"><button type="button">Añadir Cine</button></a>
-        <a href="${pageContext.request.servletContext.contextPath}/cinema/listCinema.jsp"><button type="button">Lista de Cines</button></a>  
-          
-    </header>
-
 	<table class="table">
 		<thread>
 			<tr>

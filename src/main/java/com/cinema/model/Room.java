@@ -20,20 +20,14 @@ public class Room {
 	private Cinema cinema;
 	
 	@Id
-<<<<<<< HEAD
 	@Column(name = "sala")
 	private int idRoom;
 	@Column(name = "aforo")
-=======
-	@Column(name="sala")
-	private int idRoom;
+	private int capacity;
+
 	
 	@OneToMany(mappedBy="room")
 	private List<Projection> listProjection;
-	
-	@Column(name="aforo")
->>>>>>> Dario
-	private int capacity;
 	
 	//Constructores
 	public Room(Cinema cinema, int idRoom, int capacity) {

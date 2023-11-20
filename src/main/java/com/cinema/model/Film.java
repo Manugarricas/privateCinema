@@ -38,8 +38,8 @@ public class Film {
 //	private List<Projection> listProjection;
 
 	
-//	@OneToMany(mappedBy="idFilm")
-//	private List<Jobs> listCharacter;
+	@OneToMany(mappedBy="idFilm")
+	private List<Jobs> listCharacter;
 
 	public Film () {
 		super();

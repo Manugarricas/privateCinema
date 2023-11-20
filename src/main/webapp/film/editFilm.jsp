@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
 </head>
 <body>
-
+<%@include file="../nav.jsp" %>
 <%
 
 //Variables donde almacenamos: 

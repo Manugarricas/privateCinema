@@ -2,7 +2,7 @@
 <%@page import="java.util.List"%>
 <%@page import="com.cinema.repository.CharacterRepository"%>
 <%@page import="com.cinema.model.Character"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,29 +16,13 @@
 
 </head>
 <body>
-	<% 
+<%@include file="/nav.jsp" %>
+	<%
 		//Le pasamos una lista de personajes a result
 		List<Character> result = new ArrayList();
 		result = CharacterRepository.getCharacters();
-		
-	
 	%>
-	
 <!-- 	Creamos el formulario y dentro de el hacemos un for para que nos recorra result e imprima todos los personajes -->
-
-<header>
-        <nav>
-            <div class="menu">
-            <a href="${pageContext.request.servletContext.contextPath}/film/listFilm.jsp">Peliculas</a>
-            <a href="${pageContext.request.servletContext.contextPath}/character/characterList.jsp">Personajes</a>
-            <a href="${pageContext.request.servletContext.contextPath}/tasks/listTask.jsp">Tareas</a>
-            </div>
-        </nav>
-        <a href="${pageContext.request.servletContext.contextPath}/character/addCharacter.jsp"><button type="button">Añadir Personaje</button></a>
-        <a href="${pageContext.request.servletContext.contextPath}/character/characterList.jsp"><button type="button">Lista de Personaje</button></a>  
-          
-    </header>
-
 	<table class="table">
 		<thread>
 			<tr>

@@ -1,3 +1,5 @@
+<%@page import="com.cinema.repository.ProjectionRepository"%>
+<%@page import="com.cinema.model.Projection"%>
 <%@page import="java.sql.Date"%>
 <%@page import="com.cinema.model.Film"%>
 <%@page import="com.cinema.model.Room"%>
@@ -25,7 +27,7 @@ ArrayList<Film> listFilm = null;
 Room room1 = null;
 Film film1 = null;
 Cinema cinema = null;
-Date premiereDays = null;
+Date premiereDate = null;
 int releaseDays = 0;
 int viewers = 0;
 int takings = 0;
@@ -44,7 +46,7 @@ int takings = 0;
 			film1 = DbRepository.find(Film.class, request.getParameter("cip"));
 			
 			try{
-				premiereDays = Date.valueOf(request.getParameter("premiereDays"));
+				premiereDate = Date.valueOf(request.getParameter("premiereDate"));
 			}catch(Exception e){
 				response.sendRedirect("../error.jsp?msg="+e.getMessage());
 				return;
@@ -52,6 +54,14 @@ int takings = 0;
 			releaseDays = Integer.valueOf(request.getParameter("releaseDays"));
 			viewers = Integer.valueOf(request.getParameter("viewers"));
 			takings = Integer.valueOf(request.getParameter("takings"));
+			
+			Projection projection = new Projection(room1,film1,premiereDate);
+			if(ProjectionRepository.find(projection) == null){
+				projection.setPremiereDays(releaseDays);
+				projection.setViewers(viewers);
+				projection.setTakings(takings);
+				DbRepository.add(Projection.class, projection);
+			}
 		}
 	}catch(Exception e){
 		response.sendRedirect("../error.jsp?msg="+e.getMessage());

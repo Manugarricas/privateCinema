@@ -2,7 +2,7 @@
 <%@page import="java.util.List"%>
 <%@page import="com.cinema.repository.CharacterRepository"%>
 <%@page import="com.cinema.model.Character"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,6 +16,7 @@
 
 </head>
 <body>
+<%@include file="../nav.jsp" %>
 	<% 
 		//Le pasamos una lista de personajes a result
 		List<Character> result = new ArrayList();

@@ -16,7 +16,7 @@
 <title>Añadir Tarea</title>
 </head>
 <body>
-
+<%@include file="../nav.jsp" %>
 <%
 
 	// Variables a utilizar
@@ -55,21 +55,6 @@ try{
 	message = "<span style='color: red'>Esa tarea ya existe en la base de datos</span>";
 }
 %>
-
-    <header>
-        <nav>
-            <div class="menu">
-            <a href="${pageContext.request.servletContext.contextPath}/film/listFilm.jsp">Peliculas</a>
-            <a href="${pageContext.request.servletContext.contextPath}/character/characterList.jsp">Personajes</a>
-            <a href="${pageContext.request.servletContext.contextPath}/tasks/listTask.jsp">Tareas</a>
-            </div>
-        </nav>
-        <a href="${pageContext.request.servletContext.contextPath}/tasks/addTask.jsp"><button type="button">Añadir Tarea</button></a>
-        <a href="${pageContext.request.servletContext.contextPath}/tasks/listTask.jsp"><button type="button">Lista de Tareas</button></a>  
-          
-    </header>
-
-   
     <main>
                   
  			<%=details %>

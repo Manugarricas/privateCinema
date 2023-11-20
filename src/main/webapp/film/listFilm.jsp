@@ -15,37 +15,16 @@
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
 </head>
 <body>
-
+<%@include file="../nav.jsp" %>
 <%
-
 //Variable donde almacenaremos todas las peliculas
 List<Film> result = new ArrayList();
-
-
 try{
-	
 	//Utilizamos el metodo getFilms() para traerlas de nuestra base de datos
 	result = FilmRepository.getFilms();
-	
 }catch(Exception e){
 	e.getMessage();
-	
-}
-
-
-%>
-<header>
-        <nav>
-            <div class="menu">
-            <a href="${pageContext.request.servletContext.contextPath}/film/listFilm.jsp">Peliculas</a>
-            <a href="${pageContext.request.servletContext.contextPath}/character/characterList.jsp">Personajes</a>
-            <a href="${pageContext.request.servletContext.contextPath}/tasks/listTask.jsp">Tareas</a>
-            </div>
-        </nav>
-        <a href="${pageContext.request.servletContext.contextPath}/film/addFilm.jsp"><button type="button">Añadir Pelicula</button></a>
-        <a href="${pageContext.request.servletContext.contextPath}/film/listFilm.jsp"><button type="button">Lista de Peliculas</button></a>  
-          
-    </header>
+}%>
 <h1>Lista de peliculas</h1>
 <table class="table">
   <thead>
