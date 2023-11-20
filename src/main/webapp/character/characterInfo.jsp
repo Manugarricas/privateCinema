@@ -1,16 +1,14 @@
+<%@page import="com.cinema.repository.CharacterRepository"%>
 <%@page import="com.cinema.repository.DbRepository"%>
 <%@page import="com.cinema.exceptions.FilmException"%>
 <%@page import="com.cinema.repository.FilmRepository"%>
 <%@page import="com.cinema.model.Character"%>
-<<<<<<< HEAD
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="UTF-8"%>
-=======
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
->>>>>>> 1ff59242992e4568f081352d2da6034797e5c976
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +22,7 @@
 <<<<<<< HEAD
 <%@include file="../nav.jsp" %>
 	<% 
-		//Le pasamos una lista de personajes a result
+/* 		//Le pasamos una lista de personajes a result
 		List<Character> result = new ArrayList();
 		String infoPersonaje = null;
 		
@@ -36,13 +34,10 @@
 			e.getMessage();
 		}
 		
-	
+	 */
 	%>
 	
 <!-- 	Creamos el formulario y dentro de el hacemos un for para que nos recorra result e imprima todos los personajes -->
-=======
->>>>>>> 1ff59242992e4568f081352d2da6034797e5c976
-
 <%
 
 //En este jps haremos algo similar a listFilm, con la diferencia de que mostraremos la informacion de la pelicula seleccionada
@@ -61,18 +56,6 @@ try{
 
 
 %>
-<header>
-        <nav>
-            <div class="menu">
-            <a href="${pageContext.request.servletContext.contextPath}/film/listFilm.jsp">Peliculas</a>
-            <a href="${pageContext.request.servletContext.contextPath}/character/characterList.jsp">Personajes</a>
-            <a href="${pageContext.request.servletContext.contextPath}/tasks/listTask.jsp">Tareas</a>
-            </div>
-        </nav>
-        <a href="${pageContext.request.servletContext.contextPath}/film/addFilm.jsp"><button type="button">Añadir Pelicula</button></a>
-        <a href="${pageContext.request.servletContext.contextPath}/film/listFilm.jsp"><button type="button">Lista de Peliculas</button></a>  
-          
-    </header>
 <h1><h1>Lista de Peliculas</h1>
 <table class="table">
   <thead>

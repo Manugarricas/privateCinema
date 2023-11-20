@@ -1,5 +1,3 @@
-<%@page import="com.cinema.repository.ProjectionRepository"%>
-<%@page import="com.cinema.model.Projection"%>
 <%@page import="java.sql.Date"%>
 <%@page import="com.cinema.model.Film"%>
 <%@page import="com.cinema.model.Room"%>
@@ -26,8 +24,7 @@ ArrayList<Room> listRoom = null;
 ArrayList<Film> listFilm = null;
 Room room1 = null;
 Film film1 = null;
-Cinema cinema = null;
-Date premiereDate = null;
+Date premiereDays = null;
 int releaseDays = 0;
 int viewers = 0;
 int takings = 0;
@@ -35,7 +32,7 @@ int takings = 0;
 		listCinema = (ArrayList<Cinema>) DbRepository.findAll(Cinema.class);
 		listRoom = (ArrayList<Room>) DbRepository.findAll(Room.class); 
 		listFilm = (ArrayList<Film>) DbRepository.findAll(Film.class);
-		cinema = DbRepository.find(Cinema.class, request.getParameter("cine"));
+		
 	}catch(Exception e){
 		response.sendRedirect("../error.jsp?msg="+e.getMessage());
 		return;
@@ -46,7 +43,7 @@ int takings = 0;
 			film1 = DbRepository.find(Film.class, request.getParameter("cip"));
 			
 			try{
-				premiereDate = Date.valueOf(request.getParameter("premiereDate"));
+				premiereDays = Date.valueOf(request.getParameter("premiereDays"));
 			}catch(Exception e){
 				response.sendRedirect("../error.jsp?msg="+e.getMessage());
 				return;
@@ -54,14 +51,6 @@ int takings = 0;
 			releaseDays = Integer.valueOf(request.getParameter("releaseDays"));
 			viewers = Integer.valueOf(request.getParameter("viewers"));
 			takings = Integer.valueOf(request.getParameter("takings"));
-			
-			Projection projection = new Projection(room1,film1,premiereDate);
-			if(ProjectionRepository.find(projection) == null){
-				projection.setPremiereDays(releaseDays);
-				projection.setViewers(viewers);
-				projection.setTakings(takings);
-				DbRepository.add(Projection.class, projection);
-			}
 		}
 	}catch(Exception e){
 		response.sendRedirect("../error.jsp?msg="+e.getMessage());
@@ -75,8 +64,8 @@ int takings = 0;
     <div class="col-8">
         <select class="cine" name="cine" required>
         <% 
-        for(Cinema c : listCinema){
-        	%><option value="<%=c.getCinema()%>"><%=c.getCinema() %></option><%
+        for(Cinema cinema : listCinema){
+        	%><option value="<%=cinema.getCinema()%>"><%=cinema.getCinema() %></option><%
         }
         	%> 
         </select>
@@ -87,10 +76,12 @@ int takings = 0;
     <div class="col-8">
       <select class="sala" name="sala" required>
         <% 
-        for(Room room : cinema.getRooms()){
-        	
+        
+        for(Cinema cinema : listCinema){
+        	if(cinema.getCinema().equals(request.getParameter("cine"))){
+        	for(Room room : cinema.getRooms()){
         	%><option value="<%=room.getIdRoom()%>"><%=room.getIdRoom() %></option><%
-        }
+        }}}
         	%> 
         </select>
     </div>

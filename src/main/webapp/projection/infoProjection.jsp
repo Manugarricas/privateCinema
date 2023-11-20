@@ -84,13 +84,31 @@
       <input id="duration" name="duration" type="text" class="form-control" value="<%=projection.getTakings() %>" readonly>
     </div>
   </div>
- <div class="form-group row">
-	  <div class="offset-4 col-8">
-	    <button name="submit" type="submit" class="btn btn-warning">Editar</button>
-	    <button name="submit" type="submit" class="btn btn-danger">Borrar</button>
-	  </div>
-	</div>
   </form>
+  <div>
+  <form action="infoProjection.jsp">
+		<div class="form-group row">
+		  <div class="offset-4 col-8">
+		  <input type="text" name="cinema" value="<%=projection.getRoom().getCinema().getCinema()%>" hidden>
+		  <input type="text" name="room" value="<%=projection.getRoom().getIdRoom()%>" hidden>
+		  <input type="text" name="film" value="<%=projection.getFilm().getId()%>" hidden>
+		  <input type="text" name="releaseDate" value="<%=projection.getReleaseDate()%>" hidden>
+		    <button name="submit" type="submit" class="btn btn-warning">Edit</button>
+		  </div>
+		</div>
+		</form>
+		<form action="deleteProjection.jsp">
+		<div class="form-group row">
+		  <div class="offset-4 col-8">
+		  <input type="text" name="cinema" value="<%=projection.getRoom().getCinema().getCinema()%>" hidden>
+		  <input type="text" name="room" value="<%=projection.getRoom().getIdRoom()%>" hidden>
+		  <input type="text" name="film" value="<%=projection.getFilm().getId()%>" hidden>
+		  <input type="text" name="releaseDate" value="<%=projection.getReleaseDate()%>" hidden>
+		    <button name="submit" type="submit" class="btn btn-danger">Delete</button>
+		  </div>
+		</div>
+		</form>
+		</div>
   </div>
 </body>
 </html>

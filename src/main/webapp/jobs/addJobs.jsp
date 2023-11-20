@@ -59,11 +59,8 @@ try{
 			if(request.getParameter("character")!=null){
 				if(request.getParameter("task")!=null){
 					job = new Jobs(DbRepository.find(Film.class,request.getParameter("film")), DbRepository.find(Character.class, request.getParameter("character")), DbRepository.find(Task.class, request.getParameter("task")));
-<<<<<<< HEAD
 					/* if(DbRepository.find(Jobs.class, job)!=null){*/ 
-=======
 					if(DbRepository.find(Jobs.class, job)==null){
->>>>>>> 1ff59242992e4568f081352d2da6034797e5c976
 						DbRepository.add(Jobs.class, job);
 						code = String.format("<details close><summary>Detalles del trabajo añadido</summary><label>Pelicula: %s, <br>Personaje: %s,  <br>Tarea: %s</label></details>", job.getIdFilm().getName(), job.getNameCharacter().getName(), job.getIdTask().getTask());
 					}else{
