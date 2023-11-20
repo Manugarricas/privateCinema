@@ -59,7 +59,7 @@ try{
 			if(request.getParameter("character")!=null){
 				if(request.getParameter("task")!=null){
 					job = new Jobs(DbRepository.find(Film.class,request.getParameter("film")), DbRepository.find(Character.class, request.getParameter("character")), DbRepository.find(Task.class, request.getParameter("task")));
-					if(DbRepository.find(Jobs.class, job)!=null){
+					if(DbRepository.find(Jobs.class, job)==null){
 						DbRepository.add(Jobs.class, job);
 						code = String.format("<details close><summary>Detalles del trabajo añadido</summary><label>Pelicula: %s, <br>Personaje: %s,  <br>Tarea: %s</label></details>", job.getIdFilm().getName(), job.getNameCharacter().getName(), job.getIdTask().getTask());
 					}else{
@@ -85,11 +85,11 @@ try{
 <%
 
 //Cuando pulsemos el boton de guardar aparecera la ventana con los detalles de la ultima pelicula añadida 
-if(request.getParameter("submit")!=null){
+if(request.getParameter("guardar")!=null){
 	out.print(code);
 }
 %>	
-<form action="addFilm.jsp">
+<form action="addJobs.jsp">
 <div class="form-group row">
     <label for="title" class="col-4 col-form-label">Nombre pelicula</label> 
     <div class="col-8">

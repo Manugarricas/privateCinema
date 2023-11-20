@@ -98,7 +98,7 @@ try{
       </form>
       </td>
       <td>
-      <form action="../listJobs.jsp">
+      <form action="../jobs/listJobs.jsp">
       <input id="id" name="id" type="text" class="form-control" value= '<%=f.getId() %>' hidden>
 		<div class="form-group row">
 		  <div class="offset-4 col-8">
