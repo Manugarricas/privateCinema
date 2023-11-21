@@ -24,6 +24,7 @@ ArrayList<Room> listRoom = null;
 ArrayList<Film> listFilm = null;
 Room room1 = null;
 Film film1 = null;
+Cinema cinema = null;
 Date premiereDays = null;
 int releaseDays = 0;
 int viewers = 0;
@@ -63,15 +64,17 @@ int takings = 0;
 <%
 	if(request.getParameter("elegirSala") == null){%>
 		<div class="mainWrap">
-		<form>
+		<form action="addProjection.jsp">
 			<div class="form-group row">
 			  <label for="elegirCine" class="col-4 col-form-label">Cine</label> 
 			  <div class="col-8">
 				<select class="Elegircine" name="Elegircine" required>
 				<% 
-				for(Cinema cinema : listCinema){
+				for(Cinema cinemas : listCinema){
 					%><option value="<%=cinema.getCinema()%>"><%=cinema.getCinema() %></option><%
 				}
+				
+		        cinema = DbRepository.find(Cinema.class, request.getParameter("Elegircine"));
 					%> 
 				</select>
 			  </div>
@@ -96,7 +99,6 @@ int takings = 0;
     <div class="col-8">
       <select class="sala" name="sala" required disabled>
         <% 
-        Cinema cinema = DbRepository.find(Cinema.class, request.getParameter("cine"));
         for(Room room : cinema.getRooms()){
         	%><option value="<%=room.getIdRoom()%>"><%=room.getIdRoom() %></option><%
         }
