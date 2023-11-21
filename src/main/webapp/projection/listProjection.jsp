@@ -66,13 +66,10 @@
 		</form>
       </td>
       <td>
-      <form action="infoProjection.jsp">
+      <form action="infoCinema.jsp">
 		<div class="form-group row">
 		  <div class="offset-4 col-8">
 		  <input type="text" name="cinema" value="<%=projection.getRoom().getCinema().getCinema()%>" hidden>
-		  <input type="text" name="room" value="<%=projection.getRoom().getIdRoom()%>" hidden>
-		  <input type="text" name="film" value="<%=projection.getFilm().getId()%>" hidden>
-		  <input type="text" name="releaseDate" value="<%=projection.getReleaseDate()%>" hidden>
 		    <button name="submit" type="submit" class="btn btn-primary">Ver Cine</button>
 		  </div>
 		</div>

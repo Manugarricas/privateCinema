@@ -93,6 +93,11 @@ public class Cinema {
 		Cinema other = (Cinema) obj;
 		return Objects.equals(cinema, other.cinema);
 	}
+	@Override
+	public String toString() {
+		return "Cinema [cinema=" + cinema + ", cityCinema=" + cityCinema + ", managementCinema=" + managementCinema
+				+ ", rooms=" + rooms + "]";
+	}
 	
 	
 	

@@ -80,5 +80,11 @@ public class Room {
 		Room other = (Room) obj;
 		return Objects.equals(cinema, other.cinema) && idRoom == other.idRoom;
 	}
+	@Override
+	public String toString() {
+		return "Room [cinema=" + cinema + ", idRoom=" + idRoom + ", capacity=" + capacity + ", listProjection="
+				+ listProjection + "]";
+	}
+	
 	
 }
