@@ -18,6 +18,7 @@ public class Projection {
 	@Id
 	@ManyToOne
 	@JoinColumn(name="sala")
+	
 	private Room room;
 	
 	@Id

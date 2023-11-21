@@ -48,8 +48,8 @@
       	try {
       		cinemas = (ArrayList<Cinema>)DbRepository.findAll(Cinema.class);
       	} catch (Exception e) {
-      		e.printStackTrace();
-      		message = "Error al obtener los cines";
+      		response.sendRedirect("../error.jsp?msg="+e.getMessage());
+    		return;
       	}
       	for (Cinema c : cinemas) {
       	%>
@@ -61,18 +61,18 @@
   <div class="form-group row">
     <label for="room" class="col-4 col-form-label">Room</label> 
     <div class="col-8">
-      <input id="idRoom" name="idRoom" type="text" class="form-control" required="required">
+      <input id="idRoom" name="idRoom" type="number" class="form-control" required="required" maxlength="2">
     </div>
   </div>
   <div class="form-group row">
     <label for="capacity" class="col-4 col-form-label">Capacity</label> 
     <div class="col-8">
-      <input id="capacity" name="capacity" type="text" class="form-control" required="required">
+      <input id="capacity" name="capacity" type="number" class="form-control" required="required" maxlength="4">
     </div>
   </div> 
   <div class="form-group row">
     <div class="offset-4 col-8">
-      <button name="submit" type="submit" class="btn btn-primary">Add</button>
+      <button name="submit" value="add" type="submit" class="btn btn-primary">Add</button>
     </div>
   </div>
 </form>
