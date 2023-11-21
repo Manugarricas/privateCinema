@@ -27,8 +27,15 @@
 				int idRoom = Integer.parseInt(request.getParameter("idRoom"));
 				int capacity = Integer.parseInt(request.getParameter("capacity"));
 				room = new Room(cinema, idRoom, capacity);
-				DbRepository.add(Room.class, room);
-				message = "Sala creada correctamente.";
+				
+				if (DbRepository.find(room) == null) {//comprobamos si la sala ya existe
+					DbRepository.add(Room.class, room);//si no existe, la creamos y añadimos a la base de datos
+					message = "Sala creada correctamente.";
+				}
+				else {//si ya existe se lo decimos al usuario
+					message = "Esta sala ya existe, ingresa un id de sala diferente.";
+				}
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 				message = "Ha habido un error al crear la sala.";
@@ -59,15 +66,15 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="room" class="col-4 col-form-label">Room</label> 
+    <label for="room" class="col-4 col-form-label">idRoom</label> 
     <div class="col-8">
-      <input id="idRoom" name="idRoom" type="number" class="form-control" required="required" maxlength="2">
+      <input id="idRoom" name="idRoom" type="number" class="form-control" required="required" max="99">
     </div>
   </div>
   <div class="form-group row">
     <label for="capacity" class="col-4 col-form-label">Capacity</label> 
     <div class="col-8">
-      <input id="capacity" name="capacity" type="number" class="form-control" required="required" maxlength="4">
+      <input id="capacity" name="capacity" type="number" class="form-control" required="required" max="9999">
     </div>
   </div> 
   <div class="form-group row">
