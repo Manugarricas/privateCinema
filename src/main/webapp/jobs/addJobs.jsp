@@ -59,7 +59,7 @@ try{
 			if(request.getParameter("character")!=null){
 				if(request.getParameter("task")!=null){
 					job = new Jobs(DbRepository.find(Film.class,request.getParameter("film")), DbRepository.find(Character.class, request.getParameter("character")), DbRepository.find(Task.class, request.getParameter("task")));
-					/* if(DbRepository.find(Jobs.class, job)!=null){*/ 
+					 if(DbRepository.find(Jobs.class, job)!=null){ 
 					if(DbRepository.find(Jobs.class, job)==null){
 						DbRepository.add(Jobs.class, job);
 						code = String.format("<details close><summary>Detalles del trabajo añadido</summary><label>Pelicula: %s, <br>Personaje: %s,  <br>Tarea: %s</label></details>", job.getIdFilm().getName(), job.getNameCharacter().getName(), job.getIdTask().getTask());
@@ -75,8 +75,8 @@ try{
 		}else{
 			answer = "La pelicula no puede ser nula";
 		}
-	/* } */
-	
+	 } 
+	}
 }catch(Exception e){
 	
 }
@@ -143,7 +143,6 @@ if(request.getParameter("guardar")!=null){
       <button name="guardar" type="submit" class="btn btn-primary">Guardar</button>
     </div>
   </div>
- 
 </form>
 </body>
 </html>

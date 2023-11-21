@@ -1,6 +1,7 @@
 package com.cinema.repository;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import com.cinema.exceptions.DbExceptions;
 import com.cinema.exceptions.FilmException;
@@ -31,5 +32,24 @@ public class ProjectionRepository {
         return result;
 
     }
+	
+	public static Projection editProjection(Projection projection) throws DbExceptions {
+		Transaction transaction = null;
+		Session session = BdUtil.getSessionFactory().openSession();
+		transaction = (Transaction) session.beginTransaction();
+
+		Projection result = null;
+		try {
+			result = session.merge(projection);
+			transaction.commit();
+		} catch (Exception e) {
+			System.out.println(e);
+			transaction.rollback();
+		}
+		session.close();
+
+		return result;
+
+	}
 
 }
