@@ -16,12 +16,12 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class=" nav-link" href="../Films/listFilm.jsp">Listado de peliculas</a>
-        <a class=" nav-link" href="../Films/addFilm.jsp">Añadir pelicula</a>
-        <a class=" nav-link" href="../Character/listCharacters.jsp">Listado de personaje</a>
-        <a class=" nav-link" href="../Character/addCharacters.jsp">Añadir personaje</a>
-        <a class=" nav-link" href="../Task/listTask.jsp">Listado de tarea</a>
-        <a class=" nav-link" href="../Task/addTask.jsp">Añadir tarea</a>
+        <a class=" nav-link" href="${pageContext.request.servletContext.contextPath}/film/listFilm.jsp">Listado de peliculas</a>
+        <a class=" nav-link" href="${pageContext.request.servletContext.contextPath}/film/addFilm.jsp">Añadir pelicula</a>
+        <a class=" nav-link" href="${pageContext.request.servletContext.contextPath}/character/listCharacters.jsp">Listado de personaje</a>
+        <a class=" nav-link" href="${pageContext.request.servletContext.contextPath}/character/addCharacter.jsp">Añadir personaje</a>
+        <a class=" nav-link" href="${pageContext.request.servletContext.contextPath}/tasks/listTask.jsp">Listado de tarea</a>
+        <a class=" nav-link" href="${pageContext.request.servletContext.contextPath}/tasks/addTask.jsp">Añadir tarea</a>
       </div>
     </div>
   </div>

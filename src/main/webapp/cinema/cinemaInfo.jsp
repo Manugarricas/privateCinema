@@ -16,6 +16,7 @@
 
 </head>
 <body>
+<%@include file="../nav.jsp" %>
 	<% 
 		//Le pasamos una lista de personajes a result
 		List<Cinema> result = new ArrayList();
@@ -29,25 +30,8 @@
 		}catch(Exception e){
 			response.sendRedirect("../error.jsp?msg="+e.getMessage());
 		}
-		
-	
 	%>
-	
 <!-- 	Creamos el formulario y dentro de el hacemos un for para que nos recorra result e imprima todos los personajes -->
-
-<header>
-        <nav>
-            <div class="menu">
-            <a href="${pageContext.request.servletContext.contextPath}/film/listFilm.jsp">Peliculas</a>
-            <a href="${pageContext.request.servletContext.contextPath}/character/characterList.jsp">Personajes</a>
-            <a href="${pageContext.request.servletContext.contextPath}/tasks/listTask.jsp">Tareas</a>
-            </div>
-        </nav>
-        <a href="${pageContext.request.servletContext.contextPath}/cinema/addCinema.jsp"><button type="button">Añadir Personaje</button></a>
-        <a href="${pageContext.request.servletContext.contextPath}/cinema/listCinema.jsp"><button type="button">Lista de Personaje</button></a>  
-          
-    </header>
-
 	<table class="table">
 		<thread>
 			<tr>
@@ -60,7 +44,7 @@
 			if(c.getCinema().equals(infoCinema)){%>
 				<tr>
 					<td><%=c.getCinema()%> 
-					<form action="characterList.jsp">
+					<form action="cinemaInfo.jsp">
 					<input id="info" name="info" type="text" class="form-control" value= '<%=c.getCinema()%>' hidden>
 		
 		    <button name="submit" type="submit" class="btn btn-primary">Info</button>
@@ -70,12 +54,12 @@
 					<p>Cinema: <%=infoCinema%></p><br>
 	     			<p>City: <%=c.getCity_cinema()%></p><br>
 	     			<p>Management: <%=c.getManagement_cinema() %></p><br>
-						<form action="./characterEdit.jsp">
-							<input type="text" name="characterEdit" value='<%=c.getCinema()%>' hidden>
+						<form action="./updateCinema.jsp">
+							<input type="text" name="cinemaEdit" value='<%=c.getCinema()%>' hidden>
 							<button type="submit" name="edit">Edit</button>
 						</form>
-												<form action="./characterDelete.jsp">
-							<input type="text" name="characterDelete" value='<%=c.getCinema()%>' hidden>
+												<form action="./deleteCinema.jsp">
+							<input type="text" name="deleteCinema" value='<%=c.getCinema()%>' hidden>
 							<button type="submit" name="delete">Delete</button>
 						</form>
     

@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
 </head>
 <body>
-
+<%@include file="../nav.jsp" %>
 <%
 
 //En este jps haremos algo similar a listFilm, con la diferencia de que mostraremos la informacion de la pelicula seleccionada
@@ -34,18 +34,6 @@ try{
 
 
 %>
-<header>
-        <nav>
-            <div class="menu">
-            <a href="${pageContext.request.servletContext.contextPath}/film/listFilm.jsp">Peliculas</a>
-            <a href="${pageContext.request.servletContext.contextPath}/character/characterList.jsp">Personajes</a>
-            <a href="${pageContext.request.servletContext.contextPath}/tasks/listTask.jsp">Tareas</a>
-            </div>
-        </nav>
-        <a href="${pageContext.request.servletContext.contextPath}/film/addFilm.jsp"><button type="button">Añadir Pelicula</button></a>
-        <a href="${pageContext.request.servletContext.contextPath}/film/listFilm.jsp"><button type="button">Lista de Peliculas</button></a>  
-          
-    </header>
 <h1><h1>Lista de peliculas</h1>
 <table class="table">
   <thead>
@@ -93,6 +81,16 @@ try{
 		<div class="form-group row">
 		  <div class="offset-4 col-8">
 		    <button name="submit" type="submit" class="btn btn-primary">Borrar</button>
+		  </div>
+		</div>
+      </form>
+      </td>
+      <td>
+      <form action="../jobs/listJobs.jsp">
+      <input id="id" name="id" type="text" class="form-control" value= '<%=f.getId() %>' hidden>
+		<div class="form-group row">
+		  <div class="offset-4 col-8">
+		    <button name="submit" type="submit" class="btn btn-primary">Actores</button>
 		  </div>
 		</div>
       </form>

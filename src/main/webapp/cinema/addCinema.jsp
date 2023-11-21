@@ -12,26 +12,14 @@
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
 </head>
 <body>
-<header>
-        <nav>
-            <div class="menu">
-            <a href="${pageContext.request.servletContext.contextPath}/film/listFilm.jsp">Peliculas</a>
-            <a href="${pageContext.request.servletContext.contextPath}/character/characterList.jsp">Personajes</a>
-            <a href="${pageContext.request.servletContext.contextPath}/tasks/listTask.jsp">Tareas</a>
-            </div>
-        </nav>
-        <a href="${pageContext.request.servletContext.contextPath}/cinema/addCinema.jsp"><button type="button">Añadir Cine</button></a>
-        <a href="${pageContext.request.servletContext.contextPath}/cinema/listCinema.jsp"><button type="button">Lista de Cines</button></a>  
-    </header>
-
-
+<%@include file="../nav.jsp" %>
 <!-- Creamos las variables y objeto que usaremos para llamar a los datos del comentario  -->
 <%
 String answer = "Add required fields";
 String cinema ="";
 String city ="";
 String management ="";
-String details = "No character has been created";
+String details = "No Cinema has been created";
 Cinema c = null;
 
 try{
@@ -44,7 +32,7 @@ try{
 	c = new Cinema(cinema, city, management);
 	if(DbRepository.find(Cinema.class, c.getCinema())==null){
 		DbRepository.add(Cinema.class, c);
-		answer = "Add Character correctly";
+		answer = "Add Cinema correctly";
 		details = String.format("El ultimo cine creado se llama : %s , se encuentra en la ciudad : %s y su director es : %s." , cinema, city, management);
 	}else{
 		answer = "Cinema already exists";

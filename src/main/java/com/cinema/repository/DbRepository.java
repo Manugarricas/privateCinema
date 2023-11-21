@@ -5,11 +5,15 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.query.SelectionQuery;
 import com.cinema.exceptions.DbExceptions;
 import com.cinema.exceptions.FilmException;
+import com.cinema.model.Jobs;
+import com.cinema.model.Room;
 import com.cinema.util.BdUtil;
 import com.cinema.util.DBUtil;
+
 
 
 public class DbRepository {
@@ -26,10 +30,7 @@ public class DbRepository {
 
         }
 
-        
-
         try {
-           
                 session.persist(object);
                 transaction.commit();
                 session.close();
@@ -48,19 +49,20 @@ public class DbRepository {
 
         try {
             session = BdUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
         } catch (Exception e) {
             throw new DbExceptions("Error al conectar en la base de datos");
 
         }
 
-        transaction = session.beginTransaction();
+       
 
         try {
-            if(session.find(clas, object)==null) {
+            
                 session.merge(object);
                 transaction.commit();
                 session.close();
-            }
+            
         } catch (Exception e) {
             session.close();
             transaction.rollback();
@@ -70,7 +72,8 @@ public class DbRepository {
     }
 
     public static <T> T find(Class<T> clas, String id) throws FilmException, DbExceptions {
-        T result = null; 
+       
+    	T result = null; 
         Session session = null;
 
         try {
@@ -90,6 +93,82 @@ public class DbRepository {
         return result;
 
     }
+    
+    public static <T> T find(Class<T> clas ,T o) throws FilmException, DbExceptions {
+        
+    	T result = null; 
+        Session session = null;
+
+        try {
+            session = BdUtil.getSessionFactory().openSession();
+        } catch (Exception e) {
+            throw new DbExceptions("Error al conectar en la base de datos");
+        }
+
+        try {
+            result =session.find(clas, o);
+            session.close();
+        } catch (Exception e) {
+            session.close();
+            throw new DbExceptions("Error al encontrar la entidad");
+        }
+
+        return result;
+
+    }
+    
+    public static Room find(String cine,int id) throws FilmException, DbExceptions {
+        
+    	Room result = null; 
+        Session session = null;
+
+        try {
+            session = BdUtil.getSessionFactory().openSession();
+        } catch (Exception e) {
+            throw new DbExceptions("Error al conectar en la base de datos");
+        }
+
+        try {
+            NativeQuery<Room> room = session.createNativeQuery("Select * from Sala where cine = ?1 and sala = ?2",Room.class);
+            room.setParameter(1, cine);
+            room.setParameter(2, id);
+            List<Room> listRoom = room.getResultList();
+            if(listRoom.size() != 0) {
+            	result = listRoom.get(0);
+            }
+            session.close();
+        } catch (Exception e) {
+            session.close();
+            throw new DbExceptions("Error al encontrar la entidad");
+        }
+
+        return result;
+
+    }
+
+    public static Room find(Room room) throws FilmException, DbExceptions {
+        
+    	Room result = null; 
+        Session session = null;
+
+        try {
+            session = BdUtil.getSessionFactory().openSession();
+        } catch (Exception e) {
+            throw new DbExceptions("Error al conectar en la base de datos");
+        }
+
+        try {
+            result = session.find(Room.class, room);
+            session.close();
+        } catch (Exception e) {
+            session.close();
+            throw new DbExceptions("Error al encontrar la entidad");
+        }
+
+        return result;
+
+    }
+    
 	public static <T> List<T> findAll(Class<T> t) throws Exception{
 		Session session = null;
 		List<T> result = null;
@@ -156,5 +235,27 @@ public class DbRepository {
 		}
 	}
 	
+	public static Object delete (Object element) throws Exception {
+		Transaction transaction = null;
+		Object result= null;
+		Session session = null;
+		try {
+			session = DBUtil.getSessionFactory().openSession();
+			transaction = session.beginTransaction();
+		} catch (Exception e) {
+			throw new Exception("Error en la base de datos");
+		}
+		try {
+			session.remove(element);
+			transaction.commit();
+		} catch (Exception e) {
+			transaction.rollback();
+		}
+		session.close();
+		return  result;
+		
+	}
+	
 	
 }
+

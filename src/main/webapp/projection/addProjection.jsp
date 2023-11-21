@@ -19,8 +19,8 @@
 <body>
 <%@include file="../nav.jsp" %>
 <%
-/* ArrayList<Cinema> listCinema = null;
-ArrayList<Room> listRoom = null; */
+ArrayList<Cinema> listCinema = null;
+ArrayList<Room> listRoom = null;
 ArrayList<Film> listFilm = null;
 Room room1 = null;
 Film film1 = null;
@@ -29,9 +29,10 @@ int releaseDays = 0;
 int viewers = 0;
 int takings = 0;
 	try{
-		/* listCinema = (ArrayList<Cinema>) DbRepository.findAll(Cinema.class);
-		listRoom = (ArrayList<Room>) DbRepository.findAll(Room.class); */
+		listCinema = (ArrayList<Cinema>) DbRepository.findAll(Cinema.class);
+		listRoom = (ArrayList<Room>) DbRepository.findAll(Room.class); 
 		listFilm = (ArrayList<Film>) DbRepository.findAll(Film.class);
+		
 	}catch(Exception e){
 		response.sendRedirect("../error.jsp?msg="+e.getMessage());
 		return;
@@ -40,6 +41,7 @@ int takings = 0;
 		if(request.getParameter("add") != null){
 			room1 = DbRepository.find(Room.class, request.getParameter("sala"));
 			film1 = DbRepository.find(Film.class, request.getParameter("cip"));
+			
 			try{
 				premiereDays = Date.valueOf(request.getParameter("premiereDays"));
 			}catch(Exception e){
@@ -60,31 +62,34 @@ int takings = 0;
   <div class="form-group row">
     <label for="cine" class="col-4 col-form-label">Cine</label> 
     <div class="col-8">
-        <select class="cine" required>
-       <%--  <% 
-        for(Cinema c : listCinema){
-        	%><option value="<%=c.getCinema()%>"><%=c.getCinema() %></option><%
+        <select class="cine" name="cine" required>
+        <% 
+        for(Cinema cinema : listCinema){
+        	%><option value="<%=cinema.getCinema()%>"><%=cinema.getCinema() %></option><%
         }
-        	%> --%>
+        	%> 
         </select>
       </div>
     </div>
   <div class="form-group row">
     <label for="sala" class="col-4 col-form-label">Sala</label> 
     <div class="col-8">
-      <select class="sala" required>
-        <%-- 	 <% 
-        for(Room room : listRoom){
-        	%><option value="<%=room.getRoom()%>"><%=room.getCinema() %></option><%
-        }
-        	%> --%>
+      <select class="sala" name="sala" required>
+        <% 
+        
+        for(Cinema cinema : listCinema){
+        	if(cinema.getCinema().equals(request.getParameter("cine"))){
+        	for(Room room : cinema.getRooms()){
+        	%><option value="<%=room.getIdRoom()%>"><%=room.getIdRoom() %></option><%
+        }}}
+        	%> 
         </select>
     </div>
   </div>
   <div class="form-group row">
     <label for="cip" class="col-4 col-form-label">Cip</label> 
     <div class="col-8">
-      <select class="cip" required>
+      <select class="cip" name="film" required>
         	<% 
         for(Film film : listFilm){
         	%><option value="<%=film.getId()%>"><%=film.getName() %></option><%

@@ -5,20 +5,21 @@ import java.util.Objects;
 
 import com.cinema.exceptions.ProjectionException;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Proyeccion")
 public class Projection {
-	
+		
 	@Id
 	@ManyToOne
-	@JoinColumn(name="sala")
-	
+	@JoinColumns({@JoinColumn(name="sala"),@JoinColumn(name="cine")})
 	private Room room;
 	
 	@Id
@@ -27,14 +28,14 @@ public class Projection {
 	private Film film;
 	
 	@Id
-	@JoinColumn(name="fecha_estreno")
+	@Column(name="fecha_estreno")
 	private Date releaseDate;
 	
-	@JoinColumn(name="dias_estreno")
+	@Column(name="dias_estreno")
 	private int premiereDays;
-	@JoinColumn(name="espectadores")
+	@Column(name="espectadores")
 	private int viewers;
-	@JoinColumn(name="recaudacion")
+	@Column(name="recaudacion")
 	private int takings;
 	
 	public Projection() {
@@ -50,6 +51,13 @@ public class Projection {
 		setPremiereDays(premiereDays);
 		setViewers(viewers);
 		setTakings(takings);
+	}
+	
+	public Projection(Room room, Film film, Date releaseDate) throws ProjectionException {
+		super();
+		setRoom(room);
+		setFilm(film);
+		setReleaseDate(releaseDate);
 	}
 
 	
