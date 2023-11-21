@@ -18,85 +18,79 @@
 
 
 <%
-Character c = null;
+Character character = null;
+String answer = "";
 
+try{
+	character = CharacterRepository.getCharacter(request.getParameter("characterDelete"));
+}catch(Exception e){
+	response.sendRedirect("../error?msg=Error al encontrar al personaje");
+	return;
+}
 
-	//Pasamos un personaje al objeto c
-	c = CharacterRepository.getCharacter(request.getParameter("characterDelete"));
-	
-	String name = "";
-	String nationality = "";
-	String sex = "";
-	
-	//Controlamos que el objeto c no sea nulo
+if(request.getParameter("confirmDelete") != null && request.getParameter("characterDelete")!=null){
 	try{
-	if(c != null){
-		name = c.getName();
-		nationality = c.getNationality();
-		sex = c.getSex();
-	}
+		CharacterRepository.deleteCharacter(character);
+		answer = "Borrado exitosamente";
 	}catch(Exception e){
-		
+		response.sendRedirect("../error?msg=Error al borrar el personaje");
+		return;
 	}
-	%>
+	
+	response.sendRedirect("characterList.jsp");
+
+}
+	
+%>
 
 
 <!-- //Creamos la cabecera y el formulario -->
 
-<header>
-        <nav>
-            <div class="menu">
-            <a href="${pageContext.request.servletContext.contextPath}/film/listFilm.jsp">Peliculas</a>
-            <a href="${pageContext.request.servletContext.contextPath}/character/characterList.jsp">Personajes</a>
-            <a href="${pageContext.request.servletContext.contextPath}/tasks/listTask.jsp">Tareas</a>
-            </div>
-        </nav>
-        <a href="${pageContext.request.servletContext.contextPath}/character/addCharacter.jsp"><button type="button">Añadir Personaje</button></a>
-        <a href="${pageContext.request.servletContext.contextPath}/character/characterList.jsp"><button type="button">Lista de Personaje</button></a>  
-          
-    </header>
-<!-- Creamos el formulario con sus respectivos campos de la tabla personaje -->
-
-<form>
-<br>
+<div class="mainWrap">
+	<form>
   <div class="form-group row">
-  
-    <label for="name" class="col-4 col-form-label">Name</label> 
+    <label for="text" class="col-4 col-form-label">Nombre</label> 
     <div class="col-8">
-      <input id="name" name="name" type="text" class="form-control" value='<%=name%>' readonly="readonly">
+      <div class="input-group">
+        <input id="characterDelete" name="characterDelete" type="text" class="form-control" value="<%=character.getName()%>" readonly>
+      </div>
     </div>
   </div>
   <div class="form-group row">
-    <label for="nationality" class="col-4 col-form-label">Nacionality</label> 
+    <label for="text1" class="col-4 col-form-label">Nacionalidad</label> 
     <div class="col-8">
-      <input id="nationality" name="nationality" type="text" class="form-control" value='<%=nationality%>' readonly="readonly">
+      <input id="nacionality" name="nacionality" type="text" class="form-control" value="<%=character.getNationality() %>">
     </div>
   </div>
   <div class="form-group row">
-    <label for="sex" class="col-4 col-form-label">Sex</label> 
+    <label for="text2" class="col-4 col-form-label">Genero</label> 
     <div class="col-8">
-      <input id="sex" name="sex" type="text" class="form-control" value='<%=sex%>' readonly="readonly">
+      <input id="sex" name="sex" type="text" class="form-control" value="<%=character.getSex()%>">
     </div>
   </div>
-  <p align="center">Deseas continuar con los cambios realizados</p>
-  <div class="form-group row">
-    <div class="offset-4 col-8">
-    <button name="cancel" name="cancel" type="submit" class="btn btn-primary">Cancel</button>
-      <button name="submit" name="submit" type="submit" class="btn btn-primary">Submit</button>
-    </div>
+   <div class="form-group row">
+    <label for="respuesta" class="col-4 col-form-label"><%=answer %></label> 
   </div>
-</form>
+   <%
+    if(request.getParameter("delete") == null && request.getParameter("confirmDelete") == null){//Si no hemos pulsado el boton de borrar ni el de confirmar
+    	%>
+    	<button name="delete" type="submit" class="btn btn-danger">Borrar</button>
+    <% }
+    else if(request.getParameter("confirmDelete") == null){//Si el boton de confirmar es nulo nos mostrará los siguientes botones
+    	%>
+    	<button name="confirmDelete" type="submit" class="btn btn-danger">Confirmar</button>
+    	<button name="list" type="submit" class="btn btn-info">Volver</button>
+    	<% 
+    }else if(request.getParameter("confirmDelete") != null){//Si hemos pulsado el boton de borrar, nos mostrará el siguiente botón
+    	%>
+    	<button name="list" type="submit" class="btn btn-info">Volver</button>
+    <%}
 
-<%
-	if(request.getParameter("submit") != null){
-		CharacterRepository.deleteCharacter(request.getParameter("name"));
-		response.sendRedirect("characterList.jsp");
-	
-}
+      %>
+      </div>
+  </form>
+ 
+</div>
 
-	if(request.getParameter("cancel") != null){
-		response.sendRedirect("characterList.jsp");
-	}
-%>
 </body>
 </html>

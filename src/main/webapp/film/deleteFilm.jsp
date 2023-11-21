@@ -1,3 +1,4 @@
+<%@page import="com.cinema.repository.DbRepository"%>
 <%@page import="com.cinema.exceptions.FilmException"%>
 <%@page import="com.cinema.repository.FilmRepository"%>
 <%@page import="com.cinema.model.Film"%>
@@ -18,136 +19,97 @@
 <%
 
 //Variables donde almacenamos: 
-Film f = null; //La pelicula que queremos editar
+Film film = null; //La pelicula que queremos editar
 Film newFilm = null;//La nueva pelicula editada
 String answer = "";//La respuesta
 String code=""; //Codigo de inyeccion
 
-try{
-	
-	
-	
-	//Capturamos la pelicula
-	f = FilmRepository.getFilm(request.getParameter("id"));	
-	//Creamos el boton de borrar que cambiara por el de confirmacion cuando lo pulsemos
-	code = String.format("<div class='form-group row'><div class='offset-4 col-8'><button name='del' class='btn btn-primary'>Borrar</button></div></div>");
-
-	
-	//Si pulsamos el boton de modificar
-	if(request.getParameter("del")!=null){
-		//Aparece la confirmacion de borrar
-		code = String.format("<div class='form-group row'><label>¿Estas segudo que deseas borrar esta pelicula?</label><div class='offset-4 col-8'><button name='yn' type='submit' class='btn btn-primary' value='si'>Si</button><button name='yn' type='submit' class='btn btn-primary' value='no'>No</button></div></div>");	
+	try{
+		film = DbRepository.find(Film.class, request.getParameter("idFilm"));	
+	}catch(Exception e){
+		response.sendRedirect("../error.jsp?msg=Error al encontrar la pelicula");
+		return;
 	}
 	
-	//Si pulsamos a que estamos seguro
-	if(request.getParameter("yn")!=null && request.getParameter("yn").equals("si")){
-			//La borramos
-			FilmRepository.deleteFilm(f);
-			answer ="Se ha eliminado correctamente";
-			//Por codigo de inyeccion desabilitamos el boton
-			code = String.format("<div class='form-group row'><div class='offset-4 col-8'><button name='del' class='btn btn-primary' disabled>Borrar</button></div></div>");
-		
-			//Si elegimos que no estamos seguros
-		}else if(request.getParameter("yn")!=null && request.getParameter("yn").equals("no")){
-			//No la borramos y aparece otra vez el boton de borrar
-			code = String.format("<div class='form-group row'><div class='offset-4 col-8'><button name='del' class='btn btn-primary'>Borrar</button></div></div>");
+
+	try{
+		//Si pulsamos a que estamos seguro
+		if(request.getParameter("confirmDelete") != null){
 			
-		}
-
-}catch(FilmException e){
-	answer = e.getMessage();
-	
-}
-
-
+				FilmRepository.deleteFilm(film);
+				answer ="Se ha eliminado correctamente";
+		}	
+		
+	}catch(Exception e){
+		response.sendRedirect("../error.jsp?msg=Error al encontrar borrar la pelicula");
+		return;
+	}
 
 %>
- <header>
-        <nav>
-            <div class="menu">
-            <a href="${pageContext.request.servletContext.contextPath}/film/listFilm.jsp">Peliculas</a>
-            <a href="${pageContext.request.servletContext.contextPath}/character/characterList.jsp">Personajes</a>
-            <a href="${pageContext.request.servletContext.contextPath}/tasks/listTask.jsp">Tareas</a>
-            </div>
-        </nav>
-        <a href="${pageContext.request.servletContext.contextPath}/film/addFilm.jsp"><button type="button">Añadir Pelicula</button></a>
-        <a href="${pageContext.request.servletContext.contextPath}/film/listFilm.jsp"><button type="button">Lista de Pelicula</button></a>  
-          
-    </header>
+ <div class="mainWrap">
+	<form>
+  <div class="form-group row">
+    <label for="text" class="col-4 col-form-label">Id</label> 
+    <div class="col-8">
+      <div class="input-group">
+        <input id="id" name="idFilm" type="text" class="form-control" value="<%=film.getId() %>" readonly>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="text1" class="col-4 col-form-label">Titulo</label> 
+    <div class="col-8">
+      <input id="title" name="title" type="text" class="form-control" value="<%=film.getName() %>" readonly>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="text2" class="col-4 col-form-label">Año de produccion</label> 
+    <div class="col-8">
+      <input id="film" name="film" type="text" class="form-control" value="<%=film.getYear() %>" readonly>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="text3" class="col-4 col-form-label">Titulo secundario</label> 
+    <div class="col-8">
+      <input id="releaseDate" name="releaseDate" type="text" class="form-control" value="<%=film.getSecundaryName()%>" readonly>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="text4" class="col-4 col-form-label">Nacionalidad</label> 
+    <div class="col-8">
+      <input id="premiereDays" name="premiereDays" type="text" class="form-control" value="<%=film.getNacionality() %>" readonly>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="text5" class="col-4 col-form-label">Presupuesto</label> 
+    <div class="col-8">
+      <input id="viewers" name="viewers" type="text" class="form-control" value="<%=film.getPresupuesto() %>" readonly>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="text6" class="col-4 col-form-label">Duracion</label> 
+    <div class="col-8">
+      <input id="takings" name="takings" type="text" class="form-control" value="<%=film.getDuration() %>" readonly>
+    </div>
+  </div>
+  <%
+    if(request.getParameter("delete") == null && request.getParameter("confirmDelete") == null){//Si no hemos pulsado el boton de borrar ni el de confirmar
+    	%>
+    	<button name="delete" type="submit" class="btn btn-danger">Borrar</button>
+    <% }
+    else if(request.getParameter("confirmDelete") == null){//Si el boton de confirmar es nulo nos mostrará los siguientes botones
+    	%>
+    	<button name="confirmDelete" type="submit" class="btn btn-danger">Confirmar</button>
+    	<button name="list" type="submit" class="btn btn-info">Volver</button>
+    	<% 
+    }else if(request.getParameter("confirmDelete") != null){//Si hemos pulsado el boton de borrar, nos mostrará el siguiente botón
+    	%>
+    	<button name="list" type="submit" class="btn btn-info">Volver</button>
+    <%}
 
-<h2>Borrar Pelicula</h2><br>
-<h3>¿Deseas borrar esta pelicula?</h3>	<br>
-<form>
-<div class="form-group row">
-    <label for="title" class="col-4 col-form-label">Id</label> 
-    <div class="col-8">
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <div class="input-group-text">
-            <i class="fa fa-address-card"></i>
-          </div>
-        </div> 
-        <input id="id" name="id" type="text" class="form-control"  required="required" readonly="readonly" value ='<%=f.getId()%>'>
+      %>
       </div>
-    </div>
+  </form>
   </div>
-  <div class="form-group row">
-    <label for="title" class="col-4 col-form-label">Title</label> 
-    <div class="col-8">
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <div class="input-group-text">
-            <i class="fa fa-address-card"></i>
-          </div>
-        </div> 
-        <input id="title" name="title" type="text" class="form-control"  required="required" value ='<%=f.getName()%>' readonly="readonly">
-      </div>
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="year" class="col-4 col-form-label">Production year</label> 
-    <div class="col-8">
-      <input id="year" name="year" type="text" class="form-control"  required="required" value ='<%=f.getYear()%>' readonly="readonly">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="st" class="col-4 col-form-label">Secundary title</label> 
-    <div class="col-8">
-      <input id="st" name="st" type="text" class="form-control" value ='<%=f.getSecundaryName()%>' readonly="readonly">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="nacionality" class="col-4 col-form-label">Nacionality</label> 
-    <div class="col-8">
-      <input id="nacionality" name="nacionality" type="text" class="form-control" value ='<%=f.getNacionality()%>' readonly="readonly">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="cost" class="col-4 col-form-label">Cost</label> 
-    <div class="col-8">
-      <input id="cost" name="cost" type="text" class="form-control" value ='<%=f.getPresupuesto()%>' readonly="readonly">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="duration" class="col-4 col-form-label">Duration</label> 
-    <div class="col-8">
-      <input id="duration" name="duration" type="text" class="form-control" value ='<%=f.getDuration()%>' readonly="readonly">
-    </div>
-  </div> 
-   <div class="form-group row">
-    <label for="respuesta" class="col-4 col-form-label"><%=answer %></label> 
-  </div>   
-  
-  <%//Aqui apareceran las ventanas de confirmacion de borrar y los botones
-  out.print(code); %>
-</form>
-<!-- Boton para volver a ver todas las peliculas y comprobar que se ha modificado -->
- <form action="listFilm.jsp">
-		<div class="form-group row">
-		  <div class="offset-4 col-8">
-		    <button name="submit" type="submit" class="btn btn-primary">Ver peliculas</button>
-		  </div>
-		</div>
-      </form>
 </body>
 </html>

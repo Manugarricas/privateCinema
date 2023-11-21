@@ -7,8 +7,6 @@
     pageEncoding="UTF-8"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,120 +17,78 @@
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
 </head>
 <body>
-<<<<<<< HEAD
+
 <%@include file="../nav.jsp" %>
-	<% 
-/* 		//Le pasamos una lista de personajes a result
-		List<Character> result = new ArrayList();
-		String infoPersonaje = null;
-		
-		try{
-		result = CharacterRepository.getCharacters();
-		Character info = CharacterRepository.getCharacter(request.getParameter("info"));
-		infoPersonaje = info.getName();
-		}catch(Exception e){
-			e.getMessage();
-		}
-		
-	 */
-	%>
-	
-<!-- 	Creamos el formulario y dentro de el hacemos un for para que nos recorra result e imprima todos los personajes -->
 <%
 
 //En este jps haremos algo similar a listFilm, con la diferencia de que mostraremos la informacion de la pelicula seleccionada
-List<Character> result = new ArrayList();
 Character show = null;
 
 try{
 	
-	result = DbRepository.findAll(Character.class);
 	//Una vez tenemos la lista de peliculas, recuperamos la pelicula seleccionada en el boton
 	show = DbRepository.find(Character.class, request.getParameter("idCharacter"));
 	
 }catch(FilmException e){
 	response.sendRedirect("../error?msg=Error al encontrar al personaje");
+	return;
 }
 
 
 %>
-<h1><h1>Lista de Peliculas</h1>
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Nombre del personaje</th>
-    </tr>
-  </thead>
-  <tbody>
-  <%for(Character character: result) {
-	  //Comprobamos si la pelicula que estamos listando corresponde a la que hemos pulsado para mostrar sus datos
-	  //Si es esa mostraremos todos los datos de la peliculas ademas de cambiar su boton de Show Film a Film para ocultar los datos
-	  if(character.getName().equals(show.getName())){%>
-    <tr>
-      <td>
-	     Nombre de la persona: <%=show.getName()%><br>
-	     Nacionalidad: <%=show.getNationality() %><br>
-	     Genero: <%=show.getSex() %><br>
-      <td>
-      <form action="listCharacters.jsp">
-      <input id="id" name="id" type="text" class="form-control" value= '<%=show.getName()%>' hidden>
+<div class="mainWrap">
+	<form>
+  <div class="form-group row">
+    <label for="text" class="col-4 col-form-label">Nombre</label> 
+    <div class="col-8">
+      <div class="input-group">
+        <input id="cip" name="cip" type="text" class="form-control" value="<%=show.getName()%>" readonly>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="text1" class="col-4 col-form-label">Nacionalidad</label> 
+    <div class="col-8">
+      <input id="title_p" name="title_p" type="text" class="form-control" value="<%=show.getNationality() %>" readonly>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="text2" class="col-4 col-form-label">Genero</label> 
+    <div class="col-8">
+      <input id="film" name="year_production" type="text" class="form-control" value="<%=show.getSex() %>" readonly>
+    </div>
+  </div>
+  </form>
+  <div>
+  <form action="characterEdit.jsp">
 		<div class="form-group row">
 		  <div class="offset-4 col-8">
-		    <button name="submit" type="submit" class="btn btn-primary">Titulo</button>
+		  <input type="text" name="idCharacter" value="<%=show.getName()%>" hidden>
+		    <button name="submit" type="submit" class="btn btn-warning">Editar</button>
 		  </div>
 		</div>
-      </form>
-      </td>
-       <td>
-      <form action="characterEdit.jsp">
-      <input id="id" name="id" type="text" class="form-control" value= '<%=show.getName() %>' hidden>
-		<div class="form-group row">
-		  <div class="offset-4 col-8">
-		    <button name="submit" type="submit" class="btn btn-primary">Editar</button>
-		  </div>
-		</div>
-      </form>
-      </td>
-      <td>
-      <form action="characterDelete.jsp">
-      <input id="id" name="id" type="text" class="form-control" value= '<%=show.getName() %>' hidden>
-		<div class="form-group row">
-		  <div class="offset-4 col-8">
-		    <button name="submit" type="submit" class="btn btn-primary">Borrar</button>
-		  </div>
-		</div>
-      </form>
-      </td>
-      <td>
-      <form action="../jobs/infoJobs.jsp">
-      <input id="id" name="id" type="text" class="form-control" value= '<%=show.getName() %>' hidden>
-		<div class="form-group row">
-		  <div class="offset-4 col-8">
-		    <button name="submit" type="submit" class="btn btn-primary">Actores</button>
-		  </div>
-		</div>
-      </form>
-      </td>
-    </tr>
-    <%//Si no es nuestra pelicula simplemente mostramos su nombre y la posibilidad de poder mostrar sus datos
-    }else{%>
-     <tr>
-      <td><%=character.getName() %></td>
-      <td>
-      <form action="characterInfo.jsp">
-      <input id="id" name="id" type="text" class="form-control" value= '<%=character.getName()%>' hidden>
-		<div class="form-group row">
-		  <div class="offset-4 col-8">
-		    <button name="submit" type="submit" class="btn btn-primary">Ver</button>
-		  </div>
-		</div>
-      </form>
-      </td>
-    </tr>
-    
-    <%}}%>
-  </tbody>
-</table>
+		</form>
+	<form action="characterDelete.jsp">
+	<div class="form-group row">
+	  <div class="offset-4 col-8">
+	 <input type="text" name="characterDelete" value="<%=show.getName()%>" hidden>
+	    <button name="submit" type="submit" class="btn btn-danger">Borrar</button>
+	  </div>
+	</div>
+	</form>
+	<form action="../jobs/infoJobs.jsp">
+	<div class="form-group row">
+	  <div class="offset-4 col-8">
+	  <input type="text" name="characterFilm" value="<%=show.getName()%>" hidden>
+	    <button name="submit" type="submit" class="btn btn-info">Ver peliculas del personaje</button>
+	  </div>
+	</div>
+	</form>
+	</div>
+  </div>
+
+
+
 </body>
 </html>
 </body>

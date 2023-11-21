@@ -39,11 +39,11 @@ public class Character {
 	}
 
 
-	public Character(String name, String nationality, String sex) {
+	public Character(String name, String nationality, String sex) throws CharacterException {
 		super();
 		this.name = name;
 		this.nationality = nationality;
-		this.sex = sex;
+		setSex(sex);
 	}
 
 	public List<Jobs> getListFilm() throws DbExceptions {
@@ -83,7 +83,7 @@ public class Character {
 
 
 	public void setSex(String sex) throws CharacterException{
-		if("HMO".indexOf(sex)==-1) {
+		if(!sex.equals('H') || !sex.equals('M') || !sex.equals('O')) {
 			throw new CharacterException("El sexo solo puede tener el valor H, M, O");
 		}
 		this.sex = sex;

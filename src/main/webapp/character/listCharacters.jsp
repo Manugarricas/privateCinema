@@ -51,7 +51,7 @@ try{
       <input id="id" name="idCharacter" type="text" class="form-control" value= '<%=character.getName()%>' hidden>
 		<div class="form-group row">
 		  <div class="offset-4 col-8">
-		    <button name="submit" type="submit" class="btn btn-primary">Ver</button>
+		    <button name="submit" type="submit" class="btn btn-primary">Ver personaje</button>
 		  </div>
 		</div>
       </form>
