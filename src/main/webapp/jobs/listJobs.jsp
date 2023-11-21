@@ -26,12 +26,14 @@ try{
 	film = DbRepository.find(Film.class, idFilm);
 }catch(Exception e){
 	response.sendRedirect("../error.jsp?msg=Error al encontrar la pelicula");
+	return;
 }
 
 try{
 	jobsFilm = film.getListCharacter();
 }catch(Exception e){
 	response.sendRedirect("../error.jsp?msg=Error al encontrar los personajes de la pelicula");
+	return;
 }
 
 

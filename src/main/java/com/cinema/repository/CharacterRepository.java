@@ -5,10 +5,15 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.query.SelectionQuery;
 
 import com.cinema.util.BdUtil;
+import com.cinema.exceptions.CharacterException;
+import com.cinema.exceptions.FilmException;
 import com.cinema.model.Character;
+import com.cinema.model.Film;
+import com.cinema.model.Jobs;
 
 public class CharacterRepository {
 	
@@ -84,21 +89,33 @@ public class CharacterRepository {
 	
 	//Metodo creado para borrar los personajes
 	
-	public static void deleteCharacter(String nombre_persona) {
-		Character result = null;
-		Session session = BdUtil.getSessionFactory().openSession();
-		Transaction transaction = null;
-
-		SelectionQuery<Character> q =
-				session.createSelectionQuery("From Character where name = :name", Character.class);
-				q.setParameter("name", nombre_persona);
-				List<Character> names = q.getResultList();
-		if(names.size() != 0) {
+	public static void deleteCharacter(Character c) throws CharacterException {
+		Transaction transaction = null; //Creamos la transacion
+		List<Jobs> jobs = null;
+		
+		if(c.getName() != null) {//Comprobamos que la pelicula a modificar no es nula
+			Session session = BdUtil.getSessionFactory().openSession();  //Abrimos la sesion
 			transaction = session.beginTransaction();
-			result = names.get(0);
-			session.remove(result);
-			transaction.commit();
+		
+			try {
+				NativeQuery<Jobs> query = session.createNativeQuery("Select * from Trabajo where nombre_persona = ?1", Jobs.class);
+				query.setParameter(1, c.getName());
+				jobs = query.getResultList();
+				for (Jobs j: jobs) {
+					session.remove(j);
+				}
+				session.remove(c);;//Guardamos en la base de datos la pelicula modificada
+				transaction.commit();//Persistimos los cambios
+				session.close();
+			} catch (Exception e) {
+				session.close();//Cerramos la sesion
+				transaction.rollback();//Si ocurre alguna excepcion deshacemos los cambios
+			}
+		}else {
+			throw new CharacterException("La id es nula");
 		}
+		
+		
 	}
 	
 }

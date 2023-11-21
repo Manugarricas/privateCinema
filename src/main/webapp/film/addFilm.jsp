@@ -1,3 +1,4 @@
+<%@page import="com.cinema.repository.DbRepository"%>
 <%@page import="com.cinema.exceptions.FilmException"%>
 <%@page import="com.cinema.repository.FilmRepository"%>
 <%@page import="com.cinema.model.Film"%>
@@ -23,106 +24,111 @@ String answer ="";
 String code ="";
 
 
-try{
-	
-	//Cuando pulsemos el boton
-	if(request.getParameter("submit")!=null){
-		//Comprobamos que los campos obligatorios estan rellenados
-		if( request.getParameter("id")!=null && request.getParameter("title")!=null && request.getParameter("year")!=null){
-			//Creamos la pelicula y la añadimos a la base de datos utilizando el metodo creado con anterioridad
-			film = new Film (request.getParameter("id"),request.getParameter("title"),request.getParameter("year"), request.getParameter("st"), request.getParameter("nacionality"),request.getParameter("cost"), request.getParameter("duration"));
-			FilmRepository.addFilm(film);
-			answer= "Pelicula añadida correctamete";
-		}else{
-			answer = "Añade los campos obligatorios";
+
+
+//Cuando pulsemos el boton
+if(request.getParameter("add")!=null){
+	//Comprobamos que los campos obligatorios estan rellenados
+	if( request.getParameter("idFilm")!=null && request.getParameter("title")!=null && request.getParameter("year")!=null){
+		try{
+			film = DbRepository.find(Film.class, request.getParameter("idFilm"));
+		}catch(Exception e){
+			response.sendRedirect("../error.jsp?msg=Error al analizar la pelicula");
+			return;
 		}
 		
-		//Por codigo de inyeccion añadimos la ventana donde aparecen los detalles de la pelicula que hemos añadido
-		code = String.format("<details close><summary>Detalles de la pelicula añadida</summary><label>Id: %s, <br>Nombre: %s,  <br>Año: %s,<br>Titulo Secundario: %s,  <br>Nacionalidad: %s, <br> Presupuesto: %s, <br> Duracion: %s</label></details>", film.getId(), film.getName(), film.getYear(), film.getSecundaryName(), film.getNacionality(), film.getPresupuesto(), film.getDuration());
-		
+		if(film==null){
+			//Creamos la pelicula y la añadimos a la base de datos utilizando el metodo creado con anterioridad
+			try{
+				film = new Film (request.getParameter("idFilm"),request.getParameter("title"),request.getParameter("year"), request.getParameter("st"), request.getParameter("nacionality"),request.getParameter("cost"), request.getParameter("duration"));
+				try{
+					DbRepository.add(Film.class, film);
+					answer= "Pelicula añadida correctamete";
+					code = String.format("<details close><summary>Detalles de la pelicula añadida</summary><label>Id: %s, <br>Nombre: %s,  <br>Año: %s,<br>Titulo Secundario: %s,  <br>Nacionalidad: %s, <br> Presupuesto: %s, <br> Duracion: %s</label></details>", film.getId(), film.getName(), film.getYear(), film.getSecundaryName(), film.getNacionality(), film.getPresupuesto(), film.getDuration());
+				}catch(Exception e){
+					response.sendRedirect("../error.jsp?msg=Error al añadir la pelicula");
+					return;
+				}
+			}catch(FilmException e){
+				answer=e.getMessage();
+			}
+			
+		}else{
+			answer = "La pelicula ya existe en la base de datos";
+		}
+	}else{
+		answer = "Añade los campos obligatorios";
 	}
-	
-}catch(FilmException e){
-	answer = e.getMessage();
+			
 }
+
+
 
 %>
 <h2>Añadir Pelicula</h2>
 <%
 
 //Cuando pulsemos el boton de guardar aparecera la ventana con los detalles de la ultima pelicula añadida 
-if(request.getParameter("submit")!=null){
+if(request.getParameter("add")!=null){
 	out.print(code);
 }
 
-
 %>	
-<form action="addFilm.jsp">
-<div class="form-group row">
-    <label for="title" class="col-4 col-form-label">Id</label> 
+<div class="mainWrap">
+	<form>
+	 <div class="form-group row">
+    <label for="text" class="col-4 col-form-label">Id</label> 
     <div class="col-8">
       <div class="input-group">
-        <div class="input-group-prepend">
-          <div class="input-group-text">
-            <i class="fa fa-address-card"></i>
-          </div>
-        </div> 
-        <input id="id" name="id" type="text" class="form-control"  required="required">
+        <input id="id" name="idFilm" type="text" class="form-control" required="required">
       </div>
     </div>
   </div>
   <div class="form-group row">
-    <label for="title" class="col-4 col-form-label">Titulo</label> 
+    <label for="text1" class="col-4 col-form-label">Titulo</label> 
     <div class="col-8">
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <div class="input-group-text">
-            <i class="fa fa-address-card"></i>
-          </div>
-        </div> 
-        <input id="title" name="title" type="text" class="form-control"  required="required">
-      </div>
+      <input id="title" name="title" type="text" class="form-control" required="required">
     </div>
   </div>
   <div class="form-group row">
-    <label for="year" class="col-4 col-form-label">Año de produccion</label> 
+    <label for="text2" class="col-4 col-form-label">Año de produccion</label> 
     <div class="col-8">
-      <input id="year" name="year" type="number" class="form-control"  required="required">
+      <input id="year" name="year" type="text" class="form-control" required="required">
     </div>
   </div>
   <div class="form-group row">
-    <label for="st" class="col-4 col-form-label">Titulo secundario</label> 
+    <label for="text3" class="col-4 col-form-label">Titulo secundario</label> 
     <div class="col-8">
       <input id="st" name="st" type="text" class="form-control">
     </div>
   </div>
   <div class="form-group row">
-    <label for="nacionality" class="col-4 col-form-label">Nacionalidad</label> 
+    <label for="text4" class="col-4 col-form-label">Nacionalidad</label> 
     <div class="col-8">
       <input id="nacionality" name="nacionality" type="text" class="form-control">
     </div>
   </div>
   <div class="form-group row">
-    <label for="cost" class="col-4 col-form-label">Presupuesto</label> 
+    <label for="text5" class="col-4 col-form-label">Presupuesto</label> 
     <div class="col-8">
-      <input id="cost" name="cost" type="number" class="form-control">
+      <input id="cost" name="cost" type="text" class="form-control" min="0">
     </div>
   </div>
   <div class="form-group row">
-    <label for="duration" class="col-4 col-form-label">Duracion</label> 
+    <label for="text6" class="col-4 col-form-label">Duracion</label> 
     <div class="col-8">
-      <input id="duration" name="duration" type="number" class="form-control">
+      <input id="duration" name="duration" type="text" class="form-control" min="0">
     </div>
-  </div> 
-   <div class="form-group row">
+    <div class="form-group row">
     <label for="respuesta" class="col-4 col-form-label"><%=answer %></label> 
   </div> 
   <div class="form-group row">
     <div class="offset-4 col-8">
-      <button name="submit" type="submit" class="btn btn-primary">Guardar</button>
+      <button name="add" type="submit" class="btn btn-success">Añadir Pelicula</button>
+       <a href="listFilm.jsp"><button name="list" type="button" class="btn btn-info">Volver</button></a>
     </div>
   </div>
- 
-</form>
+  </form>
+  </div>
 </body>
 </html>

@@ -4,14 +4,16 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.NativeQuery;
 import org.hibernate.query.SelectionQuery;
 
 import com.cinema.exceptions.FilmException;
 import com.cinema.model.Film;
+import com.cinema.model.Jobs;
 import com.cinema.util.BdUtil;
 
 
-public class FilmRepository {
+public class FilmRepository extends DbRepository{
 	
 	
 	/**
@@ -109,18 +111,26 @@ public class FilmRepository {
 	
 	public static void deleteFilm(Film f) throws FilmException {
 		Transaction transaction = null; //Creamos la transacion
+		List<Jobs> jobs = null;
 		
 		if(f.getId() != null) {//Comprobamos que la pelicula a modificar no es nula
 			Session session = BdUtil.getSessionFactory().openSession();  //Abrimos la sesion
 			transaction = session.beginTransaction();
 		
 			try {
+				NativeQuery<Jobs> query = session.createNativeQuery("Select * from Trabajo where cip = ?1", Jobs.class);
+				query.setParameter(1, f.getId());
+				jobs = query.getResultList();
+				for (Jobs j: jobs) {
+					session.remove(j);
+				}
 				session.remove(f);;//Guardamos en la base de datos la pelicula modificada
 				transaction.commit();//Persistimos los cambios
+				session.close();
 			} catch (Exception e) {
+				session.close();//Cerramos la sesion
 				transaction.rollback();//Si ocurre alguna excepcion deshacemos los cambios
 			}
-			session.close();//Cerramos la sesion 
 		}else {
 			throw new FilmException("La id es nula");
 		}

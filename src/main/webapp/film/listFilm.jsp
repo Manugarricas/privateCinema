@@ -1,3 +1,5 @@
+<%@page import="com.cinema.repository.DbRepository"%>
+<%@page import="com.cinema.exceptions.DbExceptions"%>
 <%@page import="com.cinema.repository.FilmRepository"%>
 <%@page import="com.cinema.model.Film"%>
 <%@page import="java.util.List"%>
@@ -18,41 +20,43 @@
 <%@include file="../nav.jsp" %>
 <%
 //Variable donde almacenaremos todas las peliculas
-List<Film> result = new ArrayList();
+List<Film> resultFilm = new ArrayList();
 try{
 	//Utilizamos el metodo getFilms() para traerlas de nuestra base de datos
-	result = FilmRepository.getFilms();
+	resultFilm = DbRepository.findAll(Film.class);
 }catch(Exception e){
-	e.getMessage();
+	response.sendRedirect("../error.jsp?msg=Error al encontrar la pelicula");
 }%>
 <h1>Lista de peliculas</h1>
+
 <table class="table">
   <thead>
     <tr>
       <th scope="col">Titulo</th>
+      
     </tr>
   </thead>
   <tbody>
   <!-- Recorremos toda la lista para crear una fila por cada una de ellas y un boton para mostrar toda la informacion -->
-  <%for(Film f: result) { %>
+  <%for(Film film: resultFilm) { %>
     <tr>
-      <td><%=f.getName() %></td>
+      <td><%=film.getName()%></td>
       <td>
       <form action="showFilm.jsp">
-      <!-- Le proporcionamos al boton al cual llamara al showFilm.jsp, el valor del id de la pelicula en especifico en 
-      la que ha pulsado -->
-      <input id="id" name="id" type="text" class="form-control" value= '<%=f.getId()%>' hidden>
 		<div class="form-group row">
 		  <div class="offset-4 col-8">
-		    <button name="submit" type="submit" class="btn btn-primary">Ver</button>
+		  <input type="text" name="idFilm" value="<%=film.getId()%>" hidden>
+		    <button name="submit" type="submit" class="btn btn-primary">Ver Pelicula</button>
 		  </div>
 		</div>
-      </form>
+		</form>
       </td>
     </tr>
     <%} %>
   </tbody>
 </table>
+
+
 </body>
 </html>
 </body>

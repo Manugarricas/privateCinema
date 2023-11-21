@@ -1,3 +1,4 @@
+<%@page import="com.cinema.repository.DbRepository"%>
 <%@page import="com.cinema.exceptions.FilmException"%>
 <%@page import="com.cinema.repository.FilmRepository"%>
 <%@page import="com.cinema.model.Film"%>
@@ -18,103 +19,94 @@
 <%@include file="../nav.jsp" %>
 <%
 
-//En este jps haremos algo similar a listFilm, con la diferencia de que mostraremos la informacion de la pelicula seleccionada
-List<Film> result = new ArrayList();
-Film show = null;
+Film result = null;
+Film showFilm = null;
 
 try{
 	
-	result = FilmRepository.getFilms();
-	//Una vez tenemos la lista de peliculas, recuperamos la pelicula seleccionada en el boton
-	show = FilmRepository.getFilm(request.getParameter("id"));
-	
+	showFilm = DbRepository.find(Film.class, request.getParameter("idFilm"));
+
 }catch(FilmException e){
-	e.getMessage();	
+	response.sendRedirect("../error.jsp?msg=Error al encontrar la pelicula");	
 }
 
 
 %>
-<h1><h1>Lista de peliculas</h1>
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Film name</th>
-    </tr>
-  </thead>
-  <tbody>
-  <%for(Film f: result) {
-	  //Comprobamos si la pelicula que estamos listando corresponde a la que hemos pulsado para mostrar sus datos
-	  //Si es esa mostraremos todos los datos de la peliculas ademas de cambiar su boton de Show Film a Film para ocultar los datos
-	  if(f.getId().equals(show.getId())){%>
-    <tr>
-      <td>
-	     ID: <%=show.getId()%><br>
-	     Nombre: <%=f.getName() %><br>
-	     Año: <%=show.getYear() %><br>
-	     Nacionalidad: <%=show.getNacionality() %><br>
-	     Nombre secundario: <%=show.getSecundaryName() %><br>
-	     Presupuesto: <%=show.getPresupuesto() %><br>
-	     Duracion: <%=show.getDuration() %>
-      <td>
-      <form action="listFilm.jsp">
-      <input id="id" name="id" type="text" class="form-control" value= '<%=f.getId()%>' hidden>
+
+<div class="mainWrap">
+	<form>
+  <div class="form-group row">
+    <label for="text" class="col-4 col-form-label">Id</label> 
+    <div class="col-8">
+      <div class="input-group">
+        <input id="cip" name="cip" type="text" class="form-control" value="<%=showFilm.getId() %>" readonly>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="text1" class="col-4 col-form-label">Titulo</label> 
+    <div class="col-8">
+      <input id="title_p" name="title_p" type="text" class="form-control" value="<%=showFilm.getName() %>" readonly>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="text2" class="col-4 col-form-label">Año de produccion</label> 
+    <div class="col-8">
+      <input id="film" name="year_production" type="text" class="form-control" value="<%=showFilm.getYear() %>" readonly>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="text3" class="col-4 col-form-label">Titulo secundario</label> 
+    <div class="col-8">
+      <input id="title_s" name="title_s" type="text" class="form-control" value="<%=showFilm.getSecundaryName()%>" readonly>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="text4" class="col-4 col-form-label">Nacionalidad</label> 
+    <div class="col-8">
+      <input id="nacionality" name="nacionality" type="text" class="form-control" value="<%=showFilm.getNacionality() %>" readonly>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="text5" class="col-4 col-form-label">Presupuesto</label> 
+    <div class="col-8">
+      <input id="budget" name="budget" type="text" class="form-control" value="<%=showFilm.getPresupuesto() %>" readonly>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="text6" class="col-4 col-form-label">Duracion</label> 
+    <div class="col-8">
+      <input id="duration" name="duration" type="text" class="form-control" value="<%=showFilm.getDuration() %>" readonly>
+    </div>
+  </div>
+  </form>
+  <div>
+  <form action="editFilm.jsp">
 		<div class="form-group row">
 		  <div class="offset-4 col-8">
-		    <button name="submit" type="submit" class="btn btn-primary">Titulo</button>
+		  <input type="text" name="idFilm" value="<%=showFilm.getId()%>" hidden>
+		    <button name="submit" type="submit" class="btn btn-warning">Editar</button>
 		  </div>
 		</div>
-      </form>
-      </td>
-       <td>
-      <form action="editFilm.jsp">
-      <input id="id" name="id" type="text" class="form-control" value= '<%=f.getId() %>' hidden>
-		<div class="form-group row">
-		  <div class="offset-4 col-8">
-		    <button name="submit" type="submit" class="btn btn-primary">Editar</button>
-		  </div>
-		</div>
-      </form>
-      </td>
-      <td>
-      <form action="deleteFilm.jsp">
-      <input id="id" name="id" type="text" class="form-control" value= '<%=f.getId() %>' hidden>
-		<div class="form-group row">
-		  <div class="offset-4 col-8">
-		    <button name="submit" type="submit" class="btn btn-primary">Borrar</button>
-		  </div>
-		</div>
-      </form>
-      </td>
-      <td>
-      <form action="../jobs/listJobs.jsp">
-      <input id="id" name="id" type="text" class="form-control" value= '<%=f.getId() %>' hidden>
-		<div class="form-group row">
-		  <div class="offset-4 col-8">
-		    <button name="submit" type="submit" class="btn btn-primary">Actores</button>
-		  </div>
-		</div>
-      </form>
-      </td>
-    </tr>
-    <%//Si no es nuestra pelicula simplemente mostramos su nombre y la posibilidad de poder mostrar sus datos
-    }else{%>
-     <tr>
-      <td><%=f.getName() %></td>
-      <td>
-      <form action="showFilm.jsp">
-      <input id="id" name="id" type="text" class="form-control" value= '<%=f.getId()%>' hidden>
-		<div class="form-group row">
-		  <div class="offset-4 col-8">
-		    <button name="submit" type="submit" class="btn btn-primary">Ver</button>
-		  </div>
-		</div>
-      </form>
-      </td>
-    </tr>
-    
-    <%}}%>
-  </tbody>
-</table>
+		</form>
+	<form action="deleteFilm.jsp">
+	<div class="form-group row">
+	  <div class="offset-4 col-8">
+	  <input type="text" name="idFilm" value="<%=showFilm.getId()%>" hidden>
+	    <button name="submit" type="submit" class="btn btn-danger">Borrar</button>
+	  </div>
+	</div>
+	</form>
+	<form action="../jobs/listJobs.jsp">
+	<div class="form-group row">
+	  <div class="offset-4 col-8">
+	  <input type="text" name="id" value="<%=showFilm.getId()%>" hidden>
+	    <button name="submit" type="submit" class="btn btn-info">Ver personajes</button>
+	  </div>
+	</div>
+	</form>
+	</div>
+  </div>
 </body>
 </html>
 </body>

@@ -180,8 +180,9 @@ public class DbRepository {
 		}
 		try {
 			result = (List<T>) session.createSelectionQuery("From " + t.getName()).getResultList();
-
+			session.close();
 		} catch (Exception e) {
+			session.close();
 			throw new Exception("Error al obtener la entidad");
 		}
 		return result;
@@ -210,6 +211,8 @@ public class DbRepository {
 			transaction.commit(); 
 			session.close();
 		}
+		session.close();
+
 	}
 	public static <T> void deleteEntity(Class<T> t, String id) throws Exception {
 		T result = null;
@@ -226,13 +229,15 @@ public class DbRepository {
 						session.createSelectionQuery("From " + t.getName() + " where id = :id",t);
 		q.setParameter(id, id);
 		List<T> entity = q.getResultList();
+		
 		if(entity.size() != 0) { 
 			transaction = (Transaction) session.beginTransaction(); 
 			result = entity.get(0);
 			session.remove(result); 
 			transaction.commit(); 
-			session.close();
 		}
+		
+		session.close();
 	}
 	
 	public static Object delete (Object element) throws Exception {
