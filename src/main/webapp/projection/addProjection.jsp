@@ -24,6 +24,7 @@ ArrayList<Room> listRoom = null;
 ArrayList<Film> listFilm = null;
 Room room1 = null;
 Film film1 = null;
+Cinema cinema = null;
 Date premiereDays = null;
 int releaseDays = 0;
 int viewers = 0;
@@ -52,36 +53,55 @@ int takings = 0;
 			viewers = Integer.valueOf(request.getParameter("viewers"));
 			takings = Integer.valueOf(request.getParameter("takings"));
 		}
+		else if(request.getParameter("sala") != null){
+			
+		}
 	}catch(Exception e){
 		response.sendRedirect("../error.jsp?msg="+e.getMessage());
 		return;
 	} 
+%>
+<%
+	if(request.getParameter("elegirSala") == null){%>
+		<div class="mainWrap">
+		<form action="addProjection.jsp">
+			<div class="form-group row">
+			  <label for="elegirCine" class="col-4 col-form-label">Cine</label> 
+			  <div class="col-8">
+				<select class="Elegircine" name="Elegircine" required>
+				<% 
+				for(Cinema cinemas : listCinema){
+					%><option value="<%=cinema.getCinema()%>"><%=cinema.getCinema() %></option><%
+				}
+				
+		        cinema = DbRepository.find(Cinema.class, request.getParameter("Elegircine"));
+					%> 
+				</select>
+			  </div>
+			</div>
+		<button name="elegirSala" type="submit" class="btn btn-success">Elegir sala</button>
+		</form>
+		</div>
+	<%}else if(request.getParameter("elegirSala") != null){
+		
+	
 %>
 <div class="mainWrap">
 <form>
   <div class="form-group row">
     <label for="cine" class="col-4 col-form-label">Cine</label> 
     <div class="col-8">
-        <select class="cine" name="cine" required>
-        <% 
-        for(Cinema cinema : listCinema){
-        	%><option value="<%=cinema.getCinema()%>"><%=cinema.getCinema() %></option><%
-        }
-        	%> 
-        </select>
+		<input id="cine" name="cine" type="text" class="form-control" value="<%=request.getParameter("Elegircine") %>" readonly>
       </div>
     </div>
   <div class="form-group row">
     <label for="sala" class="col-4 col-form-label">Sala</label> 
     <div class="col-8">
-      <select class="sala" name="sala" required>
+      <select class="sala" name="sala" required disabled>
         <% 
-        
-        for(Cinema cinema : listCinema){
-        	if(cinema.getCinema().equals(request.getParameter("cine"))){
-        	for(Room room : cinema.getRooms()){
+        for(Room room : cinema.getRooms()){
         	%><option value="<%=room.getIdRoom()%>"><%=room.getIdRoom() %></option><%
-        }}}
+        }
         	%> 
         </select>
     </div>
@@ -130,5 +150,6 @@ int takings = 0;
   </div>
 </form>
 </div>
+<%} %>
 </body>
 </html>

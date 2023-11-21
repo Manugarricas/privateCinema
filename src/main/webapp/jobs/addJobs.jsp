@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Añadir Pelicula</title>
+<title>AÃ±adir Pelicula</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -59,10 +59,10 @@ try{
 			if(request.getParameter("character")!=null){
 				if(request.getParameter("task")!=null){
 					job = new Jobs(DbRepository.find(Film.class,request.getParameter("film")), DbRepository.find(Character.class, request.getParameter("character")), DbRepository.find(Task.class, request.getParameter("task")));
-					/* if(DbRepository.find(Jobs.class, job)!=null){*/ 
+					 if(DbRepository.find(Jobs.class, job)!=null){ 
 					if(DbRepository.find(Jobs.class, job)==null){
 						DbRepository.add(Jobs.class, job);
-						code = String.format("<details close><summary>Detalles del trabajo añadido</summary><label>Pelicula: %s, <br>Personaje: %s,  <br>Tarea: %s</label></details>", job.getIdFilm().getName(), job.getNameCharacter().getName(), job.getIdTask().getTask());
+						code = String.format("<details close><summary>Detalles del trabajo aÃ±adido</summary><label>Pelicula: %s, <br>Personaje: %s,  <br>Tarea: %s</label></details>", job.getIdFilm().getName(), job.getNameCharacter().getName(), job.getIdTask().getTask());
 					}else{
 						answer = "El trabajo ya existe en la base de datos";
 					}
@@ -76,16 +76,18 @@ try{
 			answer = "La pelicula no puede ser nula";
 		}
 	 } 
-	
+
+	}
+
 }catch(Exception e){
 	
 }
 
 %>
-<h2>Añadir Pelicula</h2>
+<h2>AÃ±adir Pelicula</h2>
 <%
 
-//Cuando pulsemos el boton de guardar aparecera la ventana con los detalles de la ultima pelicula añadida 
+//Cuando pulsemos el boton de guardar aparecera la ventana con los detalles de la ultima pelicula aÃ±adida 
 if(request.getParameter("guardar")!=null){
 	out.print(code);
 }
@@ -143,7 +145,6 @@ if(request.getParameter("guardar")!=null){
       <button name="guardar" type="submit" class="btn btn-primary">Guardar</button>
     </div>
   </div>
- 
 </form>
 </body>
 </html>
