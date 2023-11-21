@@ -51,5 +51,24 @@ public class ProjectionRepository {
 		return result;
 
 	}
-
+	
+	public static void add(Projection projection) throws DbExceptions{
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = BdUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+        } catch (Exception e) {
+            throw new DbExceptions("Error al conectar en la base de datos");
+        }
+        try {
+                session.persist(projection);
+                transaction.commit();
+                session.close();
+        } catch (Exception e) {
+            session.close();
+            transaction.rollback();
+            throw new DbExceptions("Error al añadir");
+        }
+    }
 }

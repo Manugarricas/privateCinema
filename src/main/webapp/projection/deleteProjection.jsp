@@ -1,3 +1,4 @@
+<%@page import="com.cinema.exceptions.ProjectionException"%>
 <%@page import="com.cinema.repository.ProjectionRepository"%>
 <%@page import="com.cinema.repository.DbRepository"%>
 <%@page import="java.sql.Date"%>
@@ -23,6 +24,8 @@
 	Room room = null;
 	Film film = null;
 	Date releaseDate = null;
+	String answer = "";
+	String answerClass = "okMessage";
 	
 		try{
 			
@@ -37,8 +40,13 @@
 			return;
 		}
 		if(request.getParameter("confirmDelete") != null){
-			
-			DbRepository.delete(projection);
+			try{
+				DbRepository.delete(projection);
+				answer = "Borrado correctamente";
+			}catch(ProjectionException e) {
+				answer = e.getMessage();
+				answerClass = "errorMessage";
+			}
 		}
 		else if(request.getParameter("list") != null){
 			response.sendRedirect("listProjection.jsp");
@@ -106,7 +114,6 @@
     <%}
 
       %>
-      </div>
   </form>
   </div>
 </body>

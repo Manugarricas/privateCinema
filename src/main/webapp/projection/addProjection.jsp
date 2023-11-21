@@ -1,3 +1,6 @@
+<%@page import="com.cinema.repository.ProjectionRepository"%>
+<%@page import="com.cinema.model.Projection"%>
+<%@page import="java.util.List"%>
 <%@page import="java.sql.Date"%>
 <%@page import="com.cinema.model.Film"%>
 <%@page import="com.cinema.model.Room"%>
@@ -20,18 +23,18 @@
 <%@include file="../nav.jsp" %>
 <%
 ArrayList<Cinema> listCinema = null;
-ArrayList<Room> listRoom = null;
 ArrayList<Film> listFilm = null;
 Room room1 = null;
-Film film1 = null;
+Film film = null;
 Cinema cinema = null;
 Date premiereDays = null;
 int releaseDays = 0;
 int viewers = 0;
 int takings = 0;
+String answer = "";
+String answerClass = "okMessage";
 	try{
 		listCinema = (ArrayList<Cinema>) DbRepository.findAll(Cinema.class);
-		listRoom = (ArrayList<Room>) DbRepository.findAll(Room.class); 
 		listFilm = (ArrayList<Film>) DbRepository.findAll(Film.class);
 		
 	}catch(Exception e){
@@ -40,21 +43,32 @@ int takings = 0;
 	}
 	try{
 		if(request.getParameter("add") != null){
-			room1 = DbRepository.find(Room.class, request.getParameter("sala"));
-			film1 = DbRepository.find(Film.class, request.getParameter("cip"));
+			room1 = DbRepository.find(request.getParameter("cine"), Integer.valueOf(request.getParameter("sala")));
+			film = DbRepository.find(Film.class, request.getParameter("film"));
 			
 			try{
 				premiereDays = Date.valueOf(request.getParameter("premiereDays"));
+				releaseDays = Integer.valueOf(request.getParameter("releaseDays"));
+				viewers = Integer.valueOf(request.getParameter("viewers"));
+				takings = Integer.valueOf(request.getParameter("takings"));
 			}catch(Exception e){
 				response.sendRedirect("../error.jsp?msg="+e.getMessage());
 				return;
 			}
-			releaseDays = Integer.valueOf(request.getParameter("releaseDays"));
-			viewers = Integer.valueOf(request.getParameter("viewers"));
-			takings = Integer.valueOf(request.getParameter("takings"));
-		}
-		else if(request.getParameter("sala") != null){
 			
+			try{
+				Projection projection = new Projection(room1,film,premiereDays,releaseDays,viewers,takings);
+				
+				if(ProjectionRepository.find(projection) != null){
+					answer = "No puedes insertar dos proyecciones iguales";
+					answerClass = "errorMessage";
+				}
+				ProjectionRepository.add(projection);
+				answer = "Proyección añadida correctamente";
+			}catch(ProjectionException e){
+				answer = e.getMessage();
+				answerClass = "errorMessage";
+			}
 		}
 	}catch(Exception e){
 		response.sendRedirect("../error.jsp?msg="+e.getMessage());
@@ -68,14 +82,11 @@ int takings = 0;
 			<div class="form-group row">
 			  <label for="elegirCine" class="col-4 col-form-label">Cine</label> 
 			  <div class="col-8">
-				<select class="Elegircine" name="Elegircine" required>
+				<select name="Elegircine">
 				<% 
 				for(Cinema cinemas : listCinema){
-					%><option value="<%=cinema.getCinema()%>"><%=cinema.getCinema() %></option><%
-				}
-				
-		        cinema = DbRepository.find(Cinema.class, request.getParameter("Elegircine"));
-					%> 
+					%><option value="<%=cinemas.getCinema()%>" selected="selected"><%=cinemas.getCinema() %></option><%
+				}%> 
 				</select>
 			  </div>
 			</div>
@@ -83,8 +94,13 @@ int takings = 0;
 		</form>
 		</div>
 	<%}else if(request.getParameter("elegirSala") != null){
-		
-	
+		List<Room> listRoom = null;	
+		try{
+			listRoom = DbRepository.findAll(Room.class);
+		}catch(Exception e){
+			response.sendRedirect("../error.jsp?msg=No se ha encontrado ese cine");
+			return;
+		}
 %>
 <div class="mainWrap">
 <form>
@@ -97,11 +113,12 @@ int takings = 0;
   <div class="form-group row">
     <label for="sala" class="col-4 col-form-label">Sala</label> 
     <div class="col-8">
-      <select class="sala" name="sala" required disabled>
+      <select class="sala" name="sala" required>
         <% 
-        for(Room room : cinema.getRooms()){
+        for(Room room : listRoom){
+        	if(room.getCinema().getCinema().equals(request.getParameter("Elegircine"))){
         	%><option value="<%=room.getIdRoom()%>"><%=room.getIdRoom() %></option><%
-        }
+        }}
         	%> 
         </select>
     </div>
@@ -111,8 +128,8 @@ int takings = 0;
     <div class="col-8">
       <select class="cip" name="film" required>
         	<% 
-        for(Film film : listFilm){
-        	%><option value="<%=film.getId()%>"><%=film.getName() %></option><%
+        for(Film films : listFilm){
+        	%><option value="<%=films.getId()%>"><%=films.getName() %></option><%
         }
         	%>
         </select>
@@ -145,7 +162,7 @@ int takings = 0;
   <div class="form-group row">
     <div class="offset-4 col-8">
       <button name="add" type="submit" class="btn btn-success">Añadir proyeccion</button>
-       <a href="listCharacters.jsp"><button name="list" type="button" class="btn btn-info">Volver</button></a>
+       <a href="listCharacters.jsp"><button name="list" type="button" class="btn btn-info">Ver listado</button></a>
     </div>
   </div>
 </form>

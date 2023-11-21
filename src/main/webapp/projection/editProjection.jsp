@@ -37,8 +37,6 @@
 			releaseDate = Date.valueOf(request.getParameter("releaseDate"));
 			projection = new Projection(room,film,releaseDate);
 			projection1 = ProjectionRepository.find(projection);
-			
-				
 		}catch(Exception e){
 			response.sendRedirect("../error.jsp?msg="+e.getMessage());
 			return;
