@@ -25,5 +25,6 @@
     <mapping class= "com.cinema.model.Jobs"/>
 	<mapping class= "com.cinema.model.Projection"/>
 	<mapping class= "com.cinema.model.User"/>
+	<mapping class= "com.cinema.model.Ticket"/>
  </session-factory>
 </hibernate-configuration>

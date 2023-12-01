@@ -2,6 +2,8 @@ package com.cinema.model;
 
 import java.util.Objects;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -25,7 +27,7 @@ public class User {
 		super();
 		this.username = username;
 		this.email = email;
-		this.password = password;
+		this.password = DigestUtils.md5Hex(password);
 		this.name = name;
 		this.surnames = surnames;
 		this.role = role;
