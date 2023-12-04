@@ -6,12 +6,17 @@
 <!-- Importamos las hojas de estilos, tanto la propia como la de BoostStrap -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <link rel="stylesheet" href="./styles/styleSheet.css" />
-
 </head>
 <body>
-  <div class="imgContainer">
-    <a href="./logIn.jsp"><img class="userImg" src="./img/usuario (1).png"></a>
-  </div>
+ <%if (session.getAttribute("user") == null) { %>
+	<div class="imgContainer">
+    	<a href="/pruebaHibernate/logIn.jsp"><img class="userImg" src="/pruebaHibernate/img/usuario (1).png"></a>
+  	</div>
+<%} else { %>
+  	<div class="imgContainer">
+    	<a href="/pruebaHibernate/user/infoUser.jsp"><img class="userImg" src="/pruebaHibernate/img/usuario (1).png"></a>
+  	</div>
+<%} %>
 <div class="mainWrap">
 	<h1>Bienvenido a Cine ..</h1>
 	

@@ -15,6 +15,12 @@
 <%@include file="../nav.jsp" %>
 <!-- Creamos las variables y objeto que usaremos para llamar a los datos del comentario  -->
 <%
+if (session.getAttribute("roleUser").equals("user")) {
+	response.sendRedirect("/pruebaHibernate/index.jsp");
+	return;
+}
+%>
+<%
 String answer = "Add required fields";
 String cinema ="";
 String city ="";

@@ -15,7 +15,12 @@
 </head>
 <body>
 
-
+<%
+if (session.getAttribute("roleUser").equals("user")) {
+	response.sendRedirect("/pruebaHibernate/index.jsp");
+	return;
+}
+%>
 
 <%
 Character character = null;
@@ -33,7 +38,7 @@ if(request.getParameter("confirmDelete") != null && request.getParameter("charac
 		CharacterRepository.deleteCharacter(character);
 		answer = "Borrado exitosamente";
 	}catch(Exception e){
-		response.sendRedirect("../error?msg=Error al borrar el personaje");
+		response.sendRedirect("../error.jsp?msg=Error al borrar el personaje");
 		return;
 	}
 	

@@ -18,7 +18,10 @@
 <body>
 <%@include file="../nav.jsp" %>
 <%
-
+if (session.getAttribute("roleUser").equals("user")) {
+	response.sendRedirect("/pruebaHibernate/index.jsp");
+	return;
+}
 	Task t = (Task)session.getAttribute("task")!=null ? (Task)session.getAttribute("task"):null;
 	String task = "";
 	String message = "";

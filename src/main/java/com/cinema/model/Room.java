@@ -35,6 +35,13 @@ public class Room {
 		this.idRoom = idRoom;
 		this.capacity = capacity;
 	}
+	public Room(Cinema cinema, int idRoom, int capacity, List<Projection> listProjection) {
+		super();
+		this.cinema = cinema;
+		this.idRoom = idRoom;
+		this.capacity = capacity;
+		this.listProjection = listProjection;
+	}
 	public Room() {
 		super();
 	}

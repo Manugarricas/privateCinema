@@ -21,7 +21,10 @@
 <body>
 <%@include file="../nav.jsp" %>
 <%
-
+if (session.getAttribute("roleUser").equals("user")) {
+	response.sendRedirect("/pruebaHibernate/index.jsp");
+	return;
+}
 //Variables donde alamcenamos la pelicula creada y la respuesta
 List<Film> listFilm = null;
 List<Character> listCharacters = null;

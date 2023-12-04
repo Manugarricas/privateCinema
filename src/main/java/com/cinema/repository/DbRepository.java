@@ -1,5 +1,4 @@
 package com.cinema.repository;
-import java.util.List;
 
 import java.util.List;
 
@@ -9,12 +8,9 @@ import org.hibernate.query.NativeQuery;
 import org.hibernate.query.SelectionQuery;
 import com.cinema.exceptions.DbExceptions;
 import com.cinema.exceptions.FilmException;
-import com.cinema.model.Jobs;
 import com.cinema.model.Room;
 import com.cinema.util.BdUtil;
 import com.cinema.util.DBUtil;
-
-
 
 public class DbRepository {
 	
@@ -27,20 +23,18 @@ public class DbRepository {
             transaction = session.beginTransaction();
         } catch (Exception e) {
             throw new DbExceptions("Error al conectar en la base de datos");
-
         }
-
+        
         try {
-                session.persist(object);
-                transaction.commit();
-                session.close();
+        	session.persist(object);
+            transaction.commit();
+            session.close();
             
         } catch (Exception e) {
             session.close();
             transaction.rollback();
             throw new DbExceptions("Error al añadir");
         }
-
     }
 	
 	public static <T> void update(Class<T> clas, T object) throws DbExceptions{
@@ -52,23 +46,17 @@ public class DbRepository {
             transaction = session.beginTransaction();
         } catch (Exception e) {
             throw new DbExceptions("Error al conectar en la base de datos");
-
         }
-
-       
-
+        
         try {
-            
-                session.merge(object);
-                transaction.commit();
-                session.close();
-            
+        	session.merge(object);
+            transaction.commit();
+            session.close(); 
         } catch (Exception e) {
             session.close();
             transaction.rollback();
             throw new DbExceptions("Error al añadir");
         }
-
     }
 
     public static <T> T find(Class<T> clas, String id) throws FilmException, DbExceptions {
@@ -91,7 +79,6 @@ public class DbRepository {
         }
 
         return result;
-
     }
     
     public static <T> T find(Class<T> clas ,T o) throws FilmException, DbExceptions {
@@ -106,15 +93,13 @@ public class DbRepository {
         }
 
         try {
-            result =session.find(clas, o);
+            result = session.find(clas, o);
             session.close();
         } catch (Exception e) {
             session.close();
             throw new DbExceptions("Error al encontrar la entidad");
         }
-
         return result;
-
     }
     
     public static Room find(String cine,int id) throws FilmException, DbExceptions {
@@ -143,7 +128,6 @@ public class DbRepository {
         }
 
         return result;
-
     }
 
     public static Room find(Room room) throws FilmException, DbExceptions {
@@ -186,8 +170,7 @@ public class DbRepository {
 			throw new Exception("Error al obtener la entidad");
 		}
 		return result;
-		
-	} 
+	}
 	
 	public static <T> void deleteEntity(Class<T> t, int id) throws Exception {
 		T result = null;
@@ -212,8 +195,8 @@ public class DbRepository {
 			session.close();
 		}
 		session.close();
-
 	}
+	
 	public static <T> void deleteEntity(Class<T> t, String id) throws Exception {
 		T result = null;
 		Transaction transaction = null;

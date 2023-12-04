@@ -18,6 +18,12 @@
 <body>
 <%@include file="../nav.jsp" %>
 <%
+if (session.getAttribute("roleUser").equals("user")) {
+	response.sendRedirect("/pruebaHibernate/index.jsp");
+	return;
+}
+%>
+<%
 Character character = null;
 Character characterFind = null;
 String answer = "";

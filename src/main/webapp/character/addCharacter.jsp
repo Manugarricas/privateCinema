@@ -13,6 +13,13 @@
 </head>
 <body>
 <%@include file="/nav.jsp" %>
+<%
+if (session.getAttribute("roleUser").equals("user")) {
+	response.sendRedirect("/pruebaHibernate/index.jsp");
+	return;
+}
+%>
+
 <!-- Creamos las variables y objeto que usaremos para llamar a los datos del comentario  -->
 <%
 String answer = "Add required fields";

@@ -18,6 +18,10 @@
 <%@include file="../nav.jsp" %>
 <%
 
+if (session.getAttribute("roleUser").equals("user")) {
+	response.sendRedirect("/pruebaHibernate/index.jsp");
+	return;
+}
 //Variables donde alamcenamos la pelicula creada y la respuesta
 Film film = null;
 String answer ="";

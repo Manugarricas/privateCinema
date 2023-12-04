@@ -35,7 +35,7 @@
 			}
 		}
 		else {
-			message = "Ya existe un usuario con este username";
+			message = "El usuario introducido es incorrecto o no existe";
 			user = null;
 		}
 	}

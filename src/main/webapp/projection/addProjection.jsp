@@ -22,6 +22,10 @@
 <body>
 <%@include file="../nav.jsp" %>
 <%
+if (session.getAttribute("roleUser").equals("user")) {
+	response.sendRedirect("../index.jsp");
+	return;
+}
 ArrayList<Cinema> listCinema = null;
 ArrayList<Film> listFilm = null;
 Room room1 = null;

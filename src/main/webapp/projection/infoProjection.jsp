@@ -86,6 +86,7 @@
   </div>
   </form>
   <div>
+  <%if (session.getAttribute("roleUser").equals("admin")) { %>
   <form action="editProjection.jsp">
 		<div class="form-group row">
 		  <div class="offset-4 col-8">
@@ -108,6 +109,7 @@
 		  </div>
 		</div>
 		</form>
+		<%} %>
 		</div>
   </div>
 </body>

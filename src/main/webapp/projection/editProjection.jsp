@@ -19,6 +19,10 @@
 <body>
 <%@include file="../nav.jsp" %>
 	<%
+	if (session.getAttribute("roleUser").equals("user")) {
+		response.sendRedirect("../index.jsp");
+		return;
+	}
 	Projection projection = null;
 	Projection projection1 = null;
 	Room room = null;

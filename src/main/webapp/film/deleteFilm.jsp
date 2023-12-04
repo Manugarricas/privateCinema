@@ -17,7 +17,10 @@
 <body>
 <%@include file="../nav.jsp" %>
 <%
-
+if (session.getAttribute("roleUser").equals("user")) {
+	response.sendRedirect("/pruebaHibernate/index.jsp");
+	return;
+}
 //Variables donde almacenamos: 
 Film film = null; //La pelicula que queremos editar
 Film newFilm = null;//La nueva pelicula editada

@@ -79,7 +79,9 @@ Cinema c = null;
   <div class="form-group row">
     <div class="offset-4 col-8">
     <button name="cancel" name="cancel" type="submit" class="btn btn-primary">Cancel</button>
+    	<%if (session.getAttribute("userRole").equals("admin")) { %>
       <button name="submit" name="submit" type="submit" class="btn btn-primary">Submit</button>
+      <%} %>
     </div>
   </div>
 </form>

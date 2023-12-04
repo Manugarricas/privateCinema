@@ -60,6 +60,7 @@ try{
   </div>
   </form>
   <div>
+  <%if (session.getAttribute("roleUser").toString().equals("admin")) { %>
   <form action="characterEdit.jsp">
 		<div class="form-group row">
 		  <div class="offset-4 col-8">
@@ -76,6 +77,7 @@ try{
 	  </div>
 	</div>
 	</form>
+	<%} %>
 	<form action="../jobs/infoJobs.jsp">
 	<div class="form-group row">
 	  <div class="offset-4 col-8">

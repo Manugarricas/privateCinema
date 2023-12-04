@@ -15,7 +15,12 @@
 </head>
 <body>
 
-
+<%
+if (session.getAttribute("roleUser").equals("user")) {
+	response.sendRedirect("/pruebaHibernate/index.jsp");
+	return;
+}
+%>
 
 <%
 Cinema c = null;

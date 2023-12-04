@@ -44,10 +44,11 @@
 			info = "<span style='color: red'>Esta intentando acceder a una tarea no existente.</span> ";
 		// En caso de que exista, extraemos la informacion del objeto.
 		}else{
-		info = String.format("<strong>Informacion de la tarea</strong><p>Tarea: %s</p><p>Genero: %s</p>", infoTask.getTask(), infoTask.getTaskGender());
-		buttonEdit = String.format("<form action='editTask.jsp'><button type='submit' name='task' value='%s'>Editar</button></form>", infoTask.getTask());
-		buttonDel = String.format("<form action='delTask.jsp'><button type='submit' name='delTask' value='%s'>Borrar</button></form>", infoTask.getTask());
-		
+			info = String.format("<strong>Informacion de la tarea</strong><p>Tarea: %s</p><p>Genero: %s</p>", infoTask.getTask(), infoTask.getTaskGender());
+				if (session.getAttribute("roleUser").equals("admin")) {
+					buttonEdit = String.format("<form action='editTask.jsp'><button type='submit' name='task' value='%s'>Editar</button></form>", infoTask.getTask());
+					buttonDel = String.format("<form action='delTask.jsp'><button type='submit' name='delTask' value='%s'>Borrar</button></form>", infoTask.getTask());
+			}
 		}
 		
 	}

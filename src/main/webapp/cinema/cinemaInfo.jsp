@@ -29,6 +29,7 @@
 		infoCinema = info.getCinema();
 		}catch(Exception e){
 			response.sendRedirect("../error.jsp?msg="+e.getMessage());
+			return;
 		}
 	%>
 <!-- 	Creamos el formulario y dentro de el hacemos un for para que nos recorra result e imprima todos los personajes -->

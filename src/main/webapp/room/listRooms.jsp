@@ -49,7 +49,9 @@ for (Room room : CinemaRepository.getRooms(cinema.getCinema())) {
 	<tr>
 		<td>Room: <%= room.getIdRoom() %></td>
 		<td>Capacity: <%= room.getCapacity() %></td>
+		<%if (session.getAttribute("roleUser").equals("admin")) { %>
 		<td><a href="./roomInfo.jsp"><button class="btn btn-primary">Details</button></a></td>
+		<%} %>
 	</tr>
 <%}}%>
 </tbody>
