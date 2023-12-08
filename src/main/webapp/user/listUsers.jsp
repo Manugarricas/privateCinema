@@ -14,7 +14,13 @@
 <body>
 	
 	<%
-	if (session.getAttribute("roleUser").equals("user")) {
+	if (session.getAttribute("roleUser") != null) {
+		if (!session.getAttribute("roleUser").equals("admin")) {
+			response.sendRedirect("/pruebaHibernate/index.jsp");
+			return;
+		}
+	}
+	else {
 		response.sendRedirect("/pruebaHibernate/index.jsp");
 		return;
 	}

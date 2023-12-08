@@ -17,8 +17,14 @@
 	<%@ include file="../nav.jsp" %>
 	<h1 align="center">Borrar sala</h1>
 	<%
-	if (session.getAttribute("roleUser").equals("user")) {
-		response.sendRedirect("../index.jsp");
+	if (session.getAttribute("roleUser") != null) {
+		if (!session.getAttribute("roleUser").equals("admin")) {
+			response.sendRedirect("/pruebaHibernate/index.jsp");
+			return;
+		}
+	}
+	else {
+		response.sendRedirect("/pruebaHibernate/index.jsp");
 		return;
 	}
 	boolean deleted = false;

@@ -11,7 +11,6 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Lista de Peliculas</title>
-
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
@@ -20,7 +19,7 @@
 <%@include file="../nav.jsp" %>
 <%
 //Variable donde almacenaremos todas las peliculas
-List<Film> resultFilm = new ArrayList();
+List<Film> resultFilm = null;
 try{
 	//Utilizamos el metodo getFilms() para traerlas de nuestra base de datos
 	resultFilm = DbRepository.findAll(Film.class);
@@ -33,7 +32,6 @@ try{
   <thead>
     <tr>
       <th scope="col">Titulo</th>
-      
     </tr>
   </thead>
   <tbody>
@@ -45,7 +43,7 @@ try{
       <form action="showFilm.jsp">
 		<div class="form-group row">
 		  <div class="offset-4 col-8">
-		  <input type="text" name="idFilm" value="<%=film.getId()%>" hidden>
+		  <input type="text" name="idFilm" value="<%=film.getId()%>" hidden="hidden">
 		    <button name="submit" type="submit" class="btn btn-primary">Ver Pelicula</button>
 		  </div>
 		</div>
@@ -55,9 +53,5 @@ try{
     <%} %>
   </tbody>
 </table>
-
-
-</body>
-</html>
 </body>
 </html>

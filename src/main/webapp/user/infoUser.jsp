@@ -30,6 +30,7 @@
 	
 	if (request.getParameter("logOutBtn") != null) {
 		session.removeAttribute("user");
+		session.removeAttribute("roleUser");
 		response.sendRedirect("/pruebaHibernate/index.jsp");
 		return;
 	}

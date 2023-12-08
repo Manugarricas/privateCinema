@@ -19,8 +19,14 @@
 	<%@ include file="../nav.jsp" %>
 	<h1>Editar sala</h1>
 	<%
-	if (session.getAttribute("roleUser").equals("user")) {
-		response.sendRedirect("../index.jsp");
+	if (session.getAttribute("roleUser") != null) {
+		if (!session.getAttribute("roleUser").equals("admin")) {
+			response.sendRedirect("/pruebaHibernate/index.jsp");
+			return;
+		}
+	}
+	else {
+		response.sendRedirect("/pruebaHibernate/index.jsp");
 		return;
 	}
 	if (request.getParameter("roomId") == null && request.getParameter("cinemaRoom") == null) {

@@ -22,8 +22,14 @@
 <body>
 <%@include file="../nav.jsp" %>
 <%
-if (session.getAttribute("roleUser").equals("user")) {
-	response.sendRedirect("../index.jsp");
+if (session.getAttribute("roleUser") != null) {
+	if (!session.getAttribute("roleUser").equals("admin")) {
+		response.sendRedirect("/pruebaHibernate/index.jsp");
+		return;
+	}
+}
+else {
+	response.sendRedirect("/pruebaHibernate/index.jsp");
 	return;
 }
 ArrayList<Cinema> listCinema = null;
