@@ -1,5 +1,6 @@
 package com.cinema.model;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -7,6 +8,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,6 +24,9 @@ public class User {
 	@Column(name="apellidos")
 	private String surnames;
 	private String role;
+	
+	@OneToMany(mappedBy = "user")
+	private List<Ticket> tickets;
 	
 	public User(String username, String email, String password, String name, String surnames, String role) {
 		super();

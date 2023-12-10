@@ -1,6 +1,7 @@
 package com.cinema.model;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Objects;
 
 import com.cinema.exceptions.ProjectionException;
@@ -11,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -26,6 +28,9 @@ public class Projection {
 	@ManyToOne
 	@JoinColumn(name="cip")
 	private Film film;
+	
+	@OneToMany
+	private List<Ticket> tickets;
 	
 	@Id
 	@Column(name="fecha_estreno")

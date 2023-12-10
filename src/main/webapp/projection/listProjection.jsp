@@ -47,7 +47,7 @@
     <tr>
       <td><%=projection.getRoom().getCinema().getCinema() %></td>
       <td><%=projection.getRoom().getIdRoom() %></td>
-      <td><%=projection.getFilm().getId() %></td>
+      <td><%=projection.getFilm().getName() %></td>
       <td><%=projection.getReleaseDate() %></td>
       <td><%=projection.getPremiereDays() %></td>
       <td><%=projection.getViewers() %></td>
