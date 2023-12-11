@@ -5,6 +5,8 @@ import java.util.Objects;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import com.cinema.repository.TicketRepository;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -88,6 +90,14 @@ public class User {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public List<Ticket> getTickets() throws Exception {
+		return TicketRepository.getTickets(this);
+	}
+
+	public void setTickets(List<Ticket> tickets) {
+		this.tickets = tickets;
 	}
 
 	@Override

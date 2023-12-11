@@ -34,6 +34,8 @@
     <h3 class="linkMainMenu"><a class=" linkMainMenu" href="tasks/addTask.jsp">Añadir tarea</a></h3>
     
     <h3 class="linkMainMenu"><a class=" linkMainMenu" href="./ticket/cart.jsp">My shopping cart</a></h3>
+    
+    <h3 class="linkMainMenu"><a class=" linkMainMenu" href="./ticket/showFilms.jsp">Buy tickets</a></h3>
 	
 </div>
 

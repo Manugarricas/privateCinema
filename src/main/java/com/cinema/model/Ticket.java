@@ -14,13 +14,13 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="Entrada")
 public class Ticket {
-
-	 @Id
+	
+	 static private int autoIncrementId = 0;
+	
 	 @ManyToOne
 	 @JoinColumns({@JoinColumn(name="cine"),@JoinColumn(name="sala"),@JoinColumn(name="cip"),@JoinColumn(name="fecha_estreno")})
 	 private Projection projection;
 	 
-	 @Id
 	 @ManyToOne
 	 @JoinColumn(name="usuario")
 	 private User user;
@@ -28,23 +28,24 @@ public class Ticket {
 	 @Id
 	 @Column(name="idEntrada")
 	 private int id;
-	 private Date fecha_compra;
+	 @Column(name="fecha_compra")
+	 private Date buyDate;
 	 
 	//Constructores
 	//Constructor con todos los campos
-	public Ticket(Projection projection, User user, int id, Date fecha_compra) {
+	public Ticket(Projection projection, User user, Date buyDate) {
 		super();
 		this.projection = projection;
 		this.user = user;
-		this.id = id;
-		this.fecha_compra = fecha_compra;
+		this.id = autoIncrementId++;
+		this.buyDate = buyDate;
 	}
 	//Constructor con solo las pk y fk
-	public Ticket(Projection projection, User user, int id) {
+	public Ticket(Projection projection, User user) {
 		super();
 		this.projection = projection;
 		this.user = user;
-		this.id = id;
+		this.id = autoIncrementId++;
 	}
 	//Constructor vacio
 	public Ticket() {
@@ -67,14 +68,11 @@ public class Ticket {
 	public int getId() {
 		return id;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public Date getBuyDate() {
+		return buyDate;
 	}
-	public Date getFecha_compra() {
-		return fecha_compra;
-	}
-	public void setFecha_compra(Date fecha_compra) {
-		this.fecha_compra = fecha_compra;
+	public void setBuyDate(Date buyDate) {
+		this.buyDate = buyDate;
 	}
 	
 	//HasCode and equals with only the pk's and the fk's

@@ -1,17 +1,22 @@
 package com.cinema.repository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.SelectionQuery;
 
 import com.cinema.exceptions.DbExceptions;
 import com.cinema.exceptions.FilmException;
 import com.cinema.model.Projection;
+import com.cinema.model.Ticket;
 import com.cinema.util.BdUtil;
 
 public class ProjectionRepository {
 
 	public static Projection find(Projection projection) throws FilmException, DbExceptions {
-	       
+	    
 		Projection result = null; 
         Session session = null;
 
@@ -71,4 +76,27 @@ public class ProjectionRepository {
             throw new DbExceptions("Error al añadir");
         }
     }
+	
+	public static List<Projection> getActualFilms() throws Exception {
+		Session session;
+		List<Projection> result = null;
+		try {
+			session = BdUtil.getSessionFactory().openSession();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("A fail occurred while connecting to database.");
+		}
+		try {
+			//Esta es la query con la que recuepero las room del cine
+			SelectionQuery<Projection> query = (SelectionQuery<Projection>)
+					session.createNativeQuery("select * from Proyeccion where fecha_estreno+dias_estreno >= CURDATE()+0;",Projection.class);
+			result = (ArrayList<Projection>) query.getResultList();
+ 		}catch (Exception e) {
+ 			e.printStackTrace();
+ 			throw new Exception("Error al obtener las cosas:  "+ e.getMessage());
+ 		}
+		session.close();
+		return result;
+	}
+	
 }

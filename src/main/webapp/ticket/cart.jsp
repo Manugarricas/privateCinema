@@ -26,7 +26,7 @@
 	
 	ArrayList<Ticket> tickets = null;
 	try {
-		tickets = (ArrayList<Ticket>)TicketRepository.getTickets(user);
+		tickets = (ArrayList<Ticket>)user.getTickets();
 	} catch (Exception e) {
 		e.printStackTrace();
 		response.sendRedirect("../error.jsp?msg=Error al obtener las entradas.");
@@ -53,7 +53,7 @@
   		<td><%= ticket.getProjection().getFilm().getId() %></td>
   		<td><%= ticket.getProjection().getPremiereDays() %></td>
   		<td><%= ticket.getId() %></td>
-  		<td><%= ticket.getFecha_compra() %></td>
+  		<td><%= ticket.getBuyDate() %></td>
   	</tr>
 <%} %>
   </tbody>

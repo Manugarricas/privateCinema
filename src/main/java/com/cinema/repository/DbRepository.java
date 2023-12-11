@@ -17,24 +17,21 @@ public class DbRepository {
 	public static <T> void add(Class<T> clas, T object) throws DbExceptions{
         Session session = null;
         Transaction transaction = null;
-
         try {
             session = BdUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
         } catch (Exception e) {
             throw new DbExceptions("Error al conectar en la base de datos");
         }
-        
         try {
         	session.persist(object);
             transaction.commit();
-            session.close();
-            
         } catch (Exception e) {
-            session.close();
             transaction.rollback();
+            e.printStackTrace();
             throw new DbExceptions("Error al añadir");
         }
+        session.close();
     }
 	
 	public static <T> void update(Class<T> clas, T object) throws DbExceptions{
