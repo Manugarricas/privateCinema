@@ -17,26 +17,25 @@ import jakarta.persistence.Query;
 
 public class TicketRepository {
 	
-	public static List<Ticket> getTickets(User user) throws Exception {
-		Session session = null;
-		List<Ticket> listTickets = null;
+	public static List<Object[]> getTickets(String username) throws Exception{
+		Session session;
+		List<Object[]> result = null;
 		try {
-			session = DBUtil.getSessionFactory().openSession();
-		}catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception("Error al conectar a la base de datos "+ e.getMessage());
-		}
-		try {
-			SelectionQuery<Ticket> query = (SelectionQuery<Ticket>)
-					session.createSelectionQuery("From Ticket where user = :user",Ticket.class);
-			query.setParameter("user", user);
-			listTickets = query.getResultList();
+			session = BdUtil.getSessionFactory().openSession();
 		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception("Error al obtener las entradas: " + e.getMessage());
+			throw new Exception("Failed to connect to database");
 		}
+		try {
+			//Esta es la query con la que recuepero las room del cine
+			@SuppressWarnings({ "unchecked", "deprecation" })
+			SelectionQuery<Object[]> query = (SelectionQuery<Object[]>)
+			session.createNativeQuery("SELECT * FROM Entrada WHERE usuario='"+username+"';");
+			result = (ArrayList<Object[]>) query.getResultList();
+ 		}catch (Exception e) {
+ 			throw new Exception("Error al conectar a la base de datos "+ e.getMessage());
+ 		}
 		session.close();
-		return listTickets;
+		return result;
 	}
 	
 //	public static List<Ticket> getTicketsFail(User user) throws Exception {
@@ -118,13 +117,11 @@ public class TicketRepository {
 	public static List<Ticket> findByProjection(Projection projection) throws Exception{
 		Session session;
 		List<Ticket> result = null;
-
 		try {
 			session = BdUtil.getSessionFactory().openSession();
 		} catch (Exception e) {
 			throw new Exception("Failed to connect to database");
 		}
-
 		try {
 			//Esta es la query con la que recuepero las room del cine
 			SelectionQuery<Ticket> query = (SelectionQuery<Ticket>)

@@ -1,3 +1,5 @@
+<%@page import="com.cinema.model.Film"%>
+<%@page import="java.util.List"%>
 <%@page import="com.cinema.model.User"%>
 <%@page import="com.cinema.repository.DbRepository"%>
 <%@page import="com.cinema.repository.TicketRepository"%>
@@ -11,9 +13,11 @@
 <meta charset="ISO-8859-1">
 <title>Your shopping cart</title>
 <link rel="shortcut icon" href="/pruebaHibernate/img/cart.webp" type="image/x-icon">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-	
+	<%@ include file="../nav.jsp" %>
 	<%
 	User user = null;
 	if (session.getAttribute("user") == null) {
@@ -24,9 +28,9 @@
 		user = DbRepository.find(User.class, session.getAttribute("user").toString());
 	}
 	
-	ArrayList<Ticket> tickets = null;
+	List<Object[]> tickets = null;
 	try {
-		tickets = (ArrayList<Ticket>)user.getTickets();
+		tickets = user.getTickets();
 	} catch (Exception e) {
 		e.printStackTrace();
 		response.sendRedirect("../error.jsp?msg=Error al obtener las entradas.");
@@ -45,17 +49,20 @@
       <th scope="col">Fecha de compra</th>
     </tr>
   </thead>
-<%for (Ticket ticket : tickets) { %>
-  <tbody>
-  	<tr>
-  		<td><%= ticket.getProjection().getRoom().getCinema().getCinema() %></td>
-  		<td><%= ticket.getProjection().getRoom().getIdRoom() %></td>
-  		<td><%= ticket.getProjection().getFilm().getId() %></td>
-  		<td><%= ticket.getProjection().getPremiereDays() %></td>
-  		<td><%= ticket.getId() %></td>
-  		<td><%= ticket.getBuyDate() %></td>
-  	</tr>
-<%} %>
+	<tbody>
+ <%
+for (Object[] ticket : tickets) {
+	Film film = DbRepository.find(Film.class,ticket[2].toString());
+%>
+		<tr>
+			<td><%=ticket[0]%></td>
+			<td><%=ticket[1]%></td>
+			<td><%=film.getName()%></td>
+			<td><%=ticket[3]%></td>
+			<td><%=ticket[4]%></td>
+			<td><%=ticket[6]%></td>
+		</tr>
+<% }%>
   </tbody>
 </table>
 </body>

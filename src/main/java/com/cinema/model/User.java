@@ -92,8 +92,8 @@ public class User {
 		this.role = role;
 	}
 
-	public List<Ticket> getTickets() throws Exception {
-		return TicketRepository.getTickets(this);
+	public List<Object[]> getTickets() throws Exception {
+		return TicketRepository.getTickets(this.username);
 	}
 
 	public void setTickets(List<Ticket> tickets) {
